@@ -1,6 +1,6 @@
 package coronaMap;
 
-public class StoresManagement extends Manager implements Factory {
+public class PlaceManagement extends Manager implements Factory {
 	
 	public void run() {
 		
@@ -8,6 +8,6 @@ public class StoresManagement extends Manager implements Factory {
 	
 	@Override
 	public Manageable create() {
-		return new Store();
+		return new Place();
 	}
 }

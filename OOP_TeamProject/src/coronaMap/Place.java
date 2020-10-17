@@ -2,7 +2,7 @@ package coronaMap;
 
 import java.util.Scanner;
 
-public class Store implements Manageable {
+public class Place implements Manageable {
 
 	@Override
 	public boolean matches(String keyword) {
