@@ -10,7 +10,6 @@ public abstract class Manager {
 	void readAll(String fileName, Factory factory) {
 		Scanner scanFile = openFile(fileName);
 		Manageable object = null;
-		
 		while (scanFile.hasNext()) {
 			object = factory.create();
 			object.readFile(scanFile);
@@ -48,7 +47,7 @@ public abstract class Manager {
 		try {
 			scanFile = new Scanner(new File(fileName));
 		} catch (IOException e) {
-			System.out.println("Fail!" + fileName);
+			System.out.println("Fail! " + fileName);
 			System.exit(0);
 		}
 		return scanFile;
