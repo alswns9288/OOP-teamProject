@@ -1,5 +1,6 @@
 package coronaMap;
 
+import java.io.BufferedWriter;
 import java.util.Scanner;
 
 public class Place implements Manageable {
@@ -23,4 +24,9 @@ public class Place implements Manageable {
 		System.out.printf("%s\n", placeName);
 	}
 
+	@Override
+	public void addInformation(BufferedWriter writeFile, Scanner scan) {
+		// TODO Auto-generated method stub
+		
+	}
 }
