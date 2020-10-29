@@ -20,7 +20,7 @@ public class Place implements Manageable {
 
 	@Override
 	public void print() {
-		System.out.printf("%s", placeName);
+		System.out.printf("%s\n", placeName);
 	}
 
 }
