@@ -3,23 +3,24 @@ package coronaMap;
 import java.util.Scanner;
 
 public class Place implements Manageable {
-
+	String placeName;
+	
 	@Override
 	public boolean matches(String keyword) {
-		// TODO Auto-generated method stub
+		if (keyword.contentEquals(placeName)) {
+			return true;
+		}
 		return false;
 	}
 
 	@Override
 	public void readFile(Scanner scanFile) {
-		// TODO Auto-generated method stub
-
+		placeName = scanFile.nextLine();
 	}
 
 	@Override
 	public void print() {
-		// TODO Auto-generated method stub
-
+		System.out.printf("%s", placeName);
 	}
 
 }
