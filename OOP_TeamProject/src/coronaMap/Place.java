@@ -1,6 +1,6 @@
 package coronaMap;
 
-import java.io.BufferedWriter;
+import java.io.*;
 import java.util.Scanner;
 
 public class Place implements Manageable {
@@ -23,10 +23,24 @@ public class Place implements Manageable {
 	public void print() {
 		System.out.printf("%s\n", placeName);
 	}
-
+	
 	@Override
 	public void addInformation(BufferedWriter writeFile, Scanner scan) {
-		// TODO Auto-generated method stub
-		
+		System.out.print(">> ");
+		//입력형식 : 장소1 장소2
+		while (true) {
+			String inputPlace = scan.next();
+			if (inputPlace.contentEquals("end"))
+					break;
+			try { 
+				writeFile.newLine();
+				writeFile.write(inputPlace);
+				writeFile.flush();
+			} catch (IOException e) {
+				System.out.println("Fail! Place.addInformation");
+				System.exit(0);
+			}
+		}
 	}
+	
 }
