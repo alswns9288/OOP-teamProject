@@ -90,7 +90,7 @@ public class Person implements Manageable {
 				writeFile.write(path[0]);
 				writeFile.write("-");
 				writeFile.write(path[1]);
-				writeFile.flush();
+				writeFile.flush(); // 버퍼를 출력
 			} catch (IOException e) {
 				System.out.println("Fail! Person.addInformation");
 				System.exit(0);

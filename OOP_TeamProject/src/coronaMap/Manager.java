@@ -49,11 +49,11 @@ public abstract class Manager {
 		}
 	}
 	
-	ArrayList<Manageable> getList() {
+	ArrayList<Manageable> getList() { // Person에 있는 addInformation이 PeopleManagement로 들어가야 할까?
 		return objectList;
 	}
 
-	Object openFile(String fileName, boolean type) {
+	Object openFile(String fileName, boolean type) { // 수정 기능을 넣으면 openFile원래대로하고, 수정 기능과 추가 기능 묶어서 파일 여는 메소드 만들면 되나?
 		if (type) {
 			Scanner scanFile = null;
 
