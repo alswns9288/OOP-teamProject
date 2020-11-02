@@ -5,8 +5,8 @@ public class CoronaMapMain {
 	static PeopleManagement peopleManagement = new PeopleManagement();
 	
 	private void mainRun() {
-		placeManagement.run();
-		peopleManagement.run();
+		GUIMain start = new GUIMain();
+		start.creatAndShowGUI();
 	}
 	
 	public static void main(String[] args) {
