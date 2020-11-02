@@ -10,6 +10,8 @@ public abstract class Manager {
 	void readAll(String fileName, Factory factory) {
 		Scanner scanFile = (Scanner) openFile(fileName, true);
 		Manageable object = null;
+		objectList.clear();
+		
 		while (scanFile.hasNext()) {
 			object = factory.create();
 			object.readFile(scanFile);
@@ -27,14 +29,17 @@ public abstract class Manager {
 	void addInformation(String fileName, Factory factory) {
 		BufferedWriter writeFile = (BufferedWriter) openFile(fileName, false);
 		Manageable object = null;
+		System.out.println("추가\n");
 
 		object = factory.create();
 		object.addInformation(writeFile, scan);
+		objectList.add(object);
 	}
 
 	void search() {
 		String keyword = null;
-
+		
+		System.out.println("검색\n");
 		while (true) {
 			System.out.print(">> ");
 			keyword = scan.nextLine();
@@ -48,7 +53,7 @@ public abstract class Manager {
 			}
 		}
 	}
-	
+
 	ArrayList<Manageable> getList() { // Person에 있는 addInformation이 PeopleManagement로 들어가야 할까?
 		return objectList;
 	}

@@ -11,6 +11,8 @@ public class PeopleManagement extends Manager implements Factory {
 		addInformation("PersonPath.txt", this);
 		readAll("PersonPath.txt", this);
 		printAll();
+		number = getList().size();
+		System.out.println();
 	}
 
 	@Override
