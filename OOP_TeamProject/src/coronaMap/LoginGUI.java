@@ -31,12 +31,12 @@ public class LoginGUI extends JFrame {
 		pack();
 		setVisible(true);
 		
-		/*joinBtn.addActionListener(new ActionListener() {		
+		signUpButton.addActionListener(new ActionListener() {		
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				SignUpGUI frame = new SignUpGUI();
 			}
-		});*/
+		});
 		
 		loginButton.addActionListener(new ActionListener() {		
 			@Override
