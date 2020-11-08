@@ -1,4 +1,4 @@
-package GUI;
+package coronaMap;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -34,7 +34,8 @@ public class LoginGUI extends JFrame {
 		signUpButton.addActionListener(new ActionListener() {		
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				SignUpGUI frame = new SignUpGUI();
+				SignUpGUI signup = new SignUpGUI();
+				signup.creatAndShowGUI();
 			}
 		});
 		
@@ -48,14 +49,11 @@ public class LoginGUI extends JFrame {
 	}
 
 	private void setMainGUI() {
-		JLabel LabelLogin = new JLabel("Username");
-		LabelLogin.setBounds(41, 52, 69, 35);
-		background.add(LabelLogin);
-		
-		JLabel LabelPassword = new JLabel("Password");
-		LabelPassword.setBounds(41, 103, 69, 35);
-		background.add(LabelPassword);
-		
+		createLabel();
+		createTextField();
+	}
+
+	private void createTextField() {
 		TextFieldUsername = new JTextField();
 		TextFieldUsername.setBounds(157, 52, 176, 35);
 		background.add(TextFieldUsername);
@@ -70,6 +68,16 @@ public class LoginGUI extends JFrame {
 		
 		loginButton = new JButton("·Î±×ÀÎ");
 		loginButton.setBounds(108, 154, 106, 29);
-		background.add(loginButton);
+		background.add(loginButton);	
+	}
+
+	private void createLabel() {
+		JLabel LabelLogin = new JLabel("Username");
+		LabelLogin.setBounds(41, 52, 69, 35);
+		background.add(LabelLogin);
+		
+		JLabel LabelPassword = new JLabel("Password");
+		LabelPassword.setBounds(41, 103, 69, 35);
+		background.add(LabelPassword);	
 	}	
 }
