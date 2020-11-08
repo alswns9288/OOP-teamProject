@@ -1,4 +1,4 @@
-package coronaMap;
+package GUI;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -12,10 +12,10 @@ public class LoginGUI extends JFrame {
 	private JButton signUpButton;
 	private JButton loginButton;
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		LoginGUI login = new LoginGUI();
 		login.creatAndShowGUI();
-	}
+	}*/
 
 	public void creatAndShowGUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
