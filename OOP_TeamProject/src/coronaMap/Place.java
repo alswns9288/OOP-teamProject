@@ -3,6 +3,8 @@ package coronaMap;
 import java.io.*;
 import java.util.Scanner;
 
+import manager.Manageable;
+
 public class Place implements Manageable {
 	String placeName;
 

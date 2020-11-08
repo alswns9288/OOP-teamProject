@@ -1,4 +1,4 @@
-package coronaMap;
+package manager;
 
 import java.io.BufferedWriter;
 import java.util.Scanner;

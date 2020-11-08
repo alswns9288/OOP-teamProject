@@ -1,4 +1,4 @@
-package coronaMap;
+package GUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,7 +10,7 @@ public class GUIMain extends JFrame {
 	JButton previousDay = null;
 	JButton nextDay = null;
 	
-	public void creatAndShowGUI() {
+	public void createAndShowGUI() {
 		setTitle("Corona Map");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocation(500, 50);
@@ -79,11 +79,11 @@ public class GUIMain extends JFrame {
 		JPanel test = new JPanel();
 		test.setLayout(new BorderLayout());
 		
-		JButton button1 = new JButton("검색");
+		JButton button1 = new JButton("search1");
 		button1.setPreferredSize(new Dimension(128, 50));
-		JButton button2 = new JButton("검색");
+		JButton button2 = new JButton("search2");
 		button2.setPreferredSize(new Dimension(128, 50));
-		JButton button3 = new JButton("로그인");
+		JButton button3 = new JButton("sign in");
 		button3.setPreferredSize(new Dimension(128, 50));
 		
 		test.add(button1, BorderLayout.WEST);

@@ -1,4 +1,4 @@
-package coronaMap;
+package GUI;
 
 import java.awt.event.*;
 import javax.swing.*;
@@ -10,7 +10,7 @@ public class MyMouseListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		JButton button = (JButton)e.getSource();
 		if(e.getSource() == button) {
-			if(button.getText().equals("í™•ì§„ì ê²½ë¡œ")) {
+			if(button.getText().equals("È®ÁøÀÚ °æ·Î")) {
 				PrintpplGUI ppl = new PrintpplGUI();
 				ppl.createAndShowGUI();
 			}

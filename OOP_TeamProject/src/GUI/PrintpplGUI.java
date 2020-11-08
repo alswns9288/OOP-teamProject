@@ -1,8 +1,10 @@
-package coronaMap;
+package GUI;
 
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+
+import coronaMap.Person;
 
 import java.awt.event.*;
 
@@ -13,7 +15,7 @@ public class PrintpplGUI extends JFrame {
 	int matchNum = 0;
     Person per = new Person();
 	public void createAndShowGUI() {
-		setTitle("í™•ì§„ì ê²½ë¡œ í‘œì‹œ");
+		setTitle("È®ÁøÀÚ °æ·Î Ç¥½Ã");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocation(500, 50);
 		setPreferredSize(new Dimension(400, 730));
@@ -28,8 +30,8 @@ public class PrintpplGUI extends JFrame {
 		setTable();
 	}
 	
-	private void setTable() { // 1 í™”í¬ì‹ë‹¹ ì˜í†µì /12:20-ê²½ê¸°ëŒ€/13:30
-		String header[] = {"í™•ì§„ì", "ìœ„ì¹˜/ì‹œê°„", "ìœ„ì¹˜/ì‹œê°„"};
+	private void setTable() { // 1 È­Æ÷½Ä´ç ¿µÅëÁ¡/12:20-°æ±â´ë/13:30
+		String header[] = {"È®ÁøÀÚ", "À§Ä¡/½Ã°£", "À§Ä¡/½Ã°£"};
 		String contents[][] = {
 				
 		   };

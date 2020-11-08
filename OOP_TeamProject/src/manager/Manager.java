@@ -1,4 +1,4 @@
-package coronaMap;
+package manager;
 
 import java.io.*;
 import java.util.*;
@@ -7,7 +7,7 @@ public abstract class Manager {
 	Scanner scan = new Scanner(System.in);
 	ArrayList<Manageable> objectList = new ArrayList<>();
 
-	void readAll(String fileName, Factory factory) {
+	public void readAll(String fileName, Factory factory) {
 		Scanner scanFile = (Scanner) openFile(fileName, true);
 		Manageable object = null;
 		objectList.clear();
@@ -20,13 +20,13 @@ public abstract class Manager {
 		scanFile.close();
 	}
 
-	void printAll() {
+	public void printAll() {
 		for (Manageable object : objectList) {
 			object.print();
 		}
 	}
 
-	void addInformation(String fileName, Factory factory) {
+	public void addInformation(String fileName, Factory factory) {
 		BufferedWriter writeFile = (BufferedWriter) openFile(fileName, false);
 		Manageable object = null;
 		System.out.println("추가\n");
@@ -36,7 +36,7 @@ public abstract class Manager {
 		objectList.add(object);
 	}
 
-	void search() {
+	public void search() {
 		String keyword = null;
 		
 		System.out.println("검색\n");
@@ -54,7 +54,7 @@ public abstract class Manager {
 		}
 	}
 
-	ArrayList<Manageable> getList() { // Person에 있는 addInformation이 PeopleManagement로 들어가야 할까?
+	public ArrayList<Manageable> getList() { // Person에 있는 addInformation이 PeopleManagement로 들어가야 할까?
 		return objectList;
 	}
 

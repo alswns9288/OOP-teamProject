@@ -1,5 +1,7 @@
 package coronaMap;
 
+import manager.*;
+
 public class PlaceManagement extends Manager implements Factory {
 	
 	public void run() {

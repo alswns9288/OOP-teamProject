@@ -1,5 +1,7 @@
 package coronaMap;
 
+import manager.*;
+
 public class PeopleManagement extends Manager implements Factory {
 	static int number;
 	

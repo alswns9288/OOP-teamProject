@@ -1,4 +1,4 @@
-package coronaMap;
+package GUI;
 
 import java.awt.*;
 import javax.swing.*;

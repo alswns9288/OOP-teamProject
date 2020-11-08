@@ -4,6 +4,8 @@ import java.io.*;
 import java.text.*;
 import java.util.*;
 
+import manager.Manageable;
+
 public class Person implements Manageable {
 	ArrayList<String> pathList = new ArrayList<>();
 	ArrayList<String> dateList = new ArrayList<>();
