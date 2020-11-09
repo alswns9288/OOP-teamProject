@@ -23,6 +23,10 @@ public class PathCompareGUI extends JFrame{
 		this.myTime = myTime;
 	}
 	
+	public PathCompareGUI(GUIMain container2) {
+		// TODO Auto-generated constructor stub
+	}
+
 	public void createAndShowGUI() {
 		setTitle("Compare with Positive");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

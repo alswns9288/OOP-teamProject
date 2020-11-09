@@ -5,78 +5,56 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class GUIMain extends JFrame {
-	static JPanel background = null;
-	static Container container = null;
-	
-	MyMouseListener eventHandler = new MyMouseListener();
-	JPanel menu = null;
-	JButton previousDay = null;
-	JButton nextDay = null;
+	JPanel menu;	
+	FirstGUI firstGUI;
+	PrintpplGUI printpplGUI;
+	PathCompareGUI pathCompareGUI;
+	SignUpGUI signUpGUI;
 	
 	public void createAndShowGUI() {
-		setTitle("Corona Map");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocation(500, 50);
-		setPreferredSize(new Dimension(400, 730));
-		setResizable(false);
+		GUIMain container = new GUIMain();
 		
-		container = getContentPane(); // 기본: BorderLayout
-		container.setLayout(new BorderLayout(0, 1));
-		container.setBackground(Color.black);
-		setTopMenu();
-		setBackImage();
-		setButtonAndText();
-		setMenuButton();
+		container.setTitle("Corona Map");
+		container.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		container.setLocation(500, 50);
+		container.setPreferredSize(new Dimension(400, 730));
+		//container.setResizable(false);
 		
-		previousDay.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				previousDay.setIcon(new ImageIcon("arrow_left_clicked.png"));
-			}
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				previousDay.setIcon(new ImageIcon("arrow_left.png"));
-			}
-
-		});
-		nextDay.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				nextDay.setIcon(new ImageIcon("arrow_right_clicked.png"));
-			}
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				nextDay.setIcon(new ImageIcon("arrow_right.png"));
-			}
-
-		});
+		setDefaultGUI(container);
 		
-		pack();
-		setVisible(true);
+		container.firstGUI = new FirstGUI(container);
+		container.printpplGUI = new PrintpplGUI(container);
+//		container.pathCompareGUI = new PathCompareGUI(container);
+//		container.LoginGUI = new LoginGUI(container);
+		
+		container.add(container.firstGUI);
+		
+		container.pack();
+		container.setVisible(true);
+	}
+	
+	private void setDefaultGUI(GUIMain container) {
+		container.getContentPane().setLayout(new BorderLayout(0, 1));
+		container.getContentPane().setBackground(Color.black); // 이렇게 해야 검은색이 칠해짐
+		container.setTopMenu();
+		container.setMenuButton();
 	}
 
-	private void setButtonAndText() {
-		previousDay = new JButton(new ImageIcon("arrow_left.png"));
-		previousDay.setLocation(10, 10);
-		previousDay.setSize(50, 50);
-		hideJButton(background, previousDay);
-		
-		nextDay = new JButton(new ImageIcon("arrow_right.png"));
-		nextDay.setLocation(330, 10);
-		nextDay.setSize(50, 50);
-		hideJButton(background, nextDay);
-		
-		JTextField field = new JTextField("test");
-		field.setLocation(145, 10);
-		field.setSize(100, 50);
-		background.add(field);
-	}
-
-	private void hideJButton(JPanel panel, JButton button) {
-		button.setBorderPainted(false);
-		button.setContentAreaFilled(false);
-		button.setFocusPainted(false);
-		panel.add(button);
+	public void changeGUI(String menuName) {
+		if (menuName.contains("main")) {
+			getContentPane().removeAll();
+			setDefaultGUI(this);
+			getContentPane().add(firstGUI);
+			revalidate();
+			repaint();
+		}
+		if (menuName.contains("search1")) {
+			getContentPane().removeAll();
+			setDefaultGUI(this);
+			getContentPane().add(printpplGUI);
+			revalidate();
+			repaint();
+		}
 	}
 
 	private void setTopMenu() {
@@ -84,44 +62,59 @@ public class GUIMain extends JFrame {
 		menu.setLayout(new GridLayout(1, 4));
 		menu.setPreferredSize(new Dimension(400, 52));
 		
-		container.add(menu, BorderLayout.NORTH);
+		add(menu, BorderLayout.NORTH);
 	}
 
 	private void setMenuButton() {
 		JButton main = new JButton("main");
 		main.setSize(50, 100);
-		main.addActionListener(eventHandler);
 		hideJButton(menu, main);
 		
 		JButton search1 = new JButton("search1");
 		search1.setSize(50, 100);
-		search1.addActionListener(eventHandler);
 		hideJButton(menu, search1);
 		
 		JButton search2 = new JButton("search2");
 		search2.setSize(50, 100);
-		search2.addActionListener(eventHandler);
 		hideJButton(menu, search2);
 		
 		JButton signIn = new JButton("sign in");
 		signIn.setSize(50, 100);
-		signIn.addActionListener(eventHandler);
 		hideJButton(menu, signIn);
-	}
-
-	public void setBackImage() {
-		ImageIcon image = new ImageIcon("background.png");
-		background = new JPanel() {
-			public void paintComponent(Graphics g) {
-				g.drawImage(image.getImage(), 0, 0, null);
-				super.paintComponents(g);
-			}
-		};
-		background.setLayout(null);
-		container.add(background, BorderLayout.CENTER);
+		
+		addActionListener(main, search1, search2, signIn);
 	}
 	
-	public static void removeMainCenter() {
-		container.remove(background);
+	private void hideJButton(JPanel panel, JButton button) {
+		button.setBorderPainted(false);
+		button.setContentAreaFilled(false);
+		button.setFocusPainted(false);
+		panel.add(button);
+	}
+	
+	private void addActionListener(JButton... buttons) {
+		for (int i = 0; i < buttons.length; i++) {
+			buttons[i].addActionListener(new MyActionListener());
+		}
+	}
+	
+	class MyActionListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JButton button = (JButton) e.getSource();
+			
+			if (button.getText().contentEquals("main")) {
+				changeGUI("main");
+			}
+			if (button.getText().contentEquals("search1")) {
+				changeGUI("search1");
+			}
+			if (button.getText().contentEquals("search2")) {
+				changeGUI("search2");
+			}
+			if (button.getText().contentEquals("sign in")) {
+				changeGUI("sign in");
+			}
+		}
 	}
 }
