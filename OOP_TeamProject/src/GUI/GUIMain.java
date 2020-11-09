@@ -5,8 +5,11 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class GUIMain extends JFrame {
-	Container container = null;
-	JPanel background = null;
+	static JPanel background = null;
+	static Container container = null;
+	
+	MyMouseListener eventHandler = new MyMouseListener();
+	JPanel menu = null;
 	JButton previousDay = null;
 	JButton nextDay = null;
 	
@@ -17,8 +20,13 @@ public class GUIMain extends JFrame {
 		setPreferredSize(new Dimension(400, 730));
 		setResizable(false);
 		
-		setMainGUI();
+		container = getContentPane(); // ±âº»: BorderLayout
+		container.setLayout(new BorderLayout(0, 1));
+		container.setBackground(Color.black);
+		setTopMenu();
+		setBackImage();
 		setButtonAndText();
+		setMenuButton();
 		
 		previousDay.addMouseListener(new MouseAdapter() {
 			@Override
@@ -50,10 +58,13 @@ public class GUIMain extends JFrame {
 	private void setButtonAndText() {
 		previousDay = new JButton(new ImageIcon("arrow_left.png"));
 		previousDay.setLocation(10, 10);
-		hideJButton(previousDay);
+		previousDay.setSize(50, 50);
+		hideJButton(background, previousDay);
+		
 		nextDay = new JButton(new ImageIcon("arrow_right.png"));
 		nextDay.setLocation(330, 10);
-		hideJButton(nextDay);
+		nextDay.setSize(50, 50);
+		hideJButton(background, nextDay);
 		
 		JTextField field = new JTextField("test");
 		field.setLocation(145, 10);
@@ -61,36 +72,41 @@ public class GUIMain extends JFrame {
 		background.add(field);
 	}
 
-	private void hideJButton(JButton button) {
-		button.setSize(50, 50);
+	private void hideJButton(JPanel panel, JButton button) {
 		button.setBorderPainted(false);
 		button.setContentAreaFilled(false);
 		button.setFocusPainted(false);
-		background.add(button);
+		panel.add(button);
 	}
 
-	private void setMainGUI() {
-		container = getContentPane();
-		setTopButton();		
-		setBackImage();
+	private void setTopMenu() {
+		menu = new JPanel();
+		menu.setLayout(new GridLayout(1, 4));
+		menu.setPreferredSize(new Dimension(400, 52));
+		
+		container.add(menu, BorderLayout.NORTH);
 	}
 
-	private void setTopButton() {
-		JPanel test = new JPanel();
-		test.setLayout(new BorderLayout());
+	private void setMenuButton() {
+		JButton main = new JButton("main");
+		main.setSize(50, 100);
+		main.addActionListener(eventHandler);
+		hideJButton(menu, main);
 		
-		JButton button1 = new JButton("search1");
-		button1.setPreferredSize(new Dimension(128, 50));
-		JButton button2 = new JButton("search2");
-		button2.setPreferredSize(new Dimension(128, 50));
-		JButton button3 = new JButton("sign in");
-		button3.setPreferredSize(new Dimension(128, 50));
+		JButton search1 = new JButton("search1");
+		search1.setSize(50, 100);
+		search1.addActionListener(eventHandler);
+		hideJButton(menu, search1);
 		
-		test.add(button1, BorderLayout.WEST);
-		test.add(button2, BorderLayout.CENTER);
-		test.add(button3, BorderLayout.EAST);
+		JButton search2 = new JButton("search2");
+		search2.setSize(50, 100);
+		search2.addActionListener(eventHandler);
+		hideJButton(menu, search2);
 		
-		container.add(test, BorderLayout.NORTH);
+		JButton signIn = new JButton("sign in");
+		signIn.setSize(50, 100);
+		signIn.addActionListener(eventHandler);
+		hideJButton(menu, signIn);
 	}
 
 	public void setBackImage() {
@@ -103,5 +119,9 @@ public class GUIMain extends JFrame {
 		};
 		background.setLayout(null);
 		container.add(background, BorderLayout.CENTER);
+	}
+	
+	public static void removeMainCenter() {
+		container.remove(background);
 	}
 }
