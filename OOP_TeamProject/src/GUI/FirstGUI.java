@@ -5,14 +5,12 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class FirstGUI extends JPanel {
-	GUIMain container;
 	JPanel background;
 	JButton previousDay;
 	JButton nextDay;
 	ImageIcon image = new ImageIcon("background.png");
 
-	public FirstGUI(GUIMain container) {
-		this.container = container;
+	public FirstGUI() {
 		setLayout(null);
 		setButtonAndText();
 		

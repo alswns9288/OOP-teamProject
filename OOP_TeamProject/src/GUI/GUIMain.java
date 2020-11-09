@@ -22,9 +22,9 @@ public class GUIMain extends JFrame {
 		
 		setDefaultGUI(container);
 		
-		container.firstGUI = new FirstGUI(container);
-		container.printpplGUI = new PrintpplGUI(container);
-//		container.pathCompareGUI = new PathCompareGUI(container);
+		container.firstGUI = new FirstGUI();
+		container.printpplGUI = new PrintpplGUI();
+		container.pathCompareGUI = new PathCompareGUI();
 //		container.LoginGUI = new LoginGUI(container);
 		
 		container.add(container.firstGUI);
@@ -52,6 +52,13 @@ public class GUIMain extends JFrame {
 			getContentPane().removeAll();
 			setDefaultGUI(this);
 			getContentPane().add(printpplGUI);
+			revalidate();
+			repaint();
+		}
+		if (menuName.contains("search2")) {
+			getContentPane().removeAll();
+			setDefaultGUI(this);
+			getContentPane().add(pathCompareGUI);
 			revalidate();
 			repaint();
 		}

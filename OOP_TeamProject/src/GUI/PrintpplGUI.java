@@ -6,11 +6,9 @@ import coronaMap.Person;
 
 public class PrintpplGUI extends JPanel {
 	Person per = new Person();
-	GUIMain container;
 	int matchNum;
 
-	public PrintpplGUI(GUIMain container) {
-		this.container = container;
+	public PrintpplGUI() {
 		setTable();
 	}
 
