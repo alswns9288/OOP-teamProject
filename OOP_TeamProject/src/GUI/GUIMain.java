@@ -10,6 +10,7 @@ public class GUIMain extends JFrame {
 	PrintpplGUI printpplGUI;
 	PathCompareGUI pathCompareGUI;
 	SignUpGUI signUpGUI;
+	LoginGUI LoginGUI;
 	
 	public void createAndShowGUI() {
 		GUIMain container = new GUIMain();
@@ -18,14 +19,14 @@ public class GUIMain extends JFrame {
 		container.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		container.setLocation(500, 50);
 		container.setPreferredSize(new Dimension(400, 730));
-		//container.setResizable(false);
+		container.setResizable(false);
 		
 		setDefaultGUI(container);
 		
 		container.firstGUI = new FirstGUI();
 		container.printpplGUI = new PrintpplGUI();
 		container.pathCompareGUI = new PathCompareGUI();
-//		container.LoginGUI = new LoginGUI(container);
+		container.LoginGUI = new LoginGUI();
 		
 		container.add(container.firstGUI);
 		
@@ -35,7 +36,7 @@ public class GUIMain extends JFrame {
 	
 	private void setDefaultGUI(GUIMain container) {
 		container.getContentPane().setLayout(new BorderLayout(0, 1));
-		container.getContentPane().setBackground(Color.black); // ÀÌ·¸°Ô ÇØ¾ß °ËÀº»öÀÌ Ä¥ÇØÁü
+		container.getContentPane().setBackground(Color.black); // ì´ë ‡ê²Œ í•´ì•¼ ê²€ì€ìƒ‰ì´ ì¹ í•´ì§
 		container.setTopMenu();
 		container.setMenuButton();
 	}
@@ -59,6 +60,13 @@ public class GUIMain extends JFrame {
 			getContentPane().removeAll();
 			setDefaultGUI(this);
 			getContentPane().add(pathCompareGUI);
+			revalidate();
+			repaint();
+		}
+		if (menuName.contains("sign in")) {
+			getContentPane().removeAll();
+			setDefaultGUI(this);
+			getContentPane().add(LoginGUI);
 			revalidate();
 			repaint();
 		}
