@@ -10,14 +10,12 @@ import java.util.ArrayList;
 
 public class PathCompareGUI extends JPanel {
 	int dangerRate = 1;
-	String myName;
 	ArrayList<String> myPlace = new ArrayList<String>();
 	ArrayList<String> myDay = new ArrayList<String>();
 	ArrayList<String> myTime = new ArrayList<String>();
 
-	public PathCompareGUI(String inputName, String[] inputPlace, 
-			String[] inputDay, String[] inputTime) { // 외부로부터 이름, 장소, 날짜, 시간을 배열 형태로 전달받음
-		myName = inputName;
+	public PathCompareGUI( String[] inputPlace, 
+			String[] inputDay, String[] inputTime) { // 외부로부터  장소, 날짜, 시간을 배열 형태로 전달받음
 		for(int i = 0; i<inputPlace.length; i++) {
 			myPlace.add(inputPlace[i]);
 		}
@@ -69,7 +67,6 @@ public class PathCompareGUI extends JPanel {
 			contents[i][2] = myDay.get(i);
 			contents[i][3] = myTime.get(i);
 		}
-		contents[0][0] = myName;
 		
 		JTable myTable = new JTable(contents, header);
 		JScrollPane jscrollPane = new JScrollPane(myTable);
