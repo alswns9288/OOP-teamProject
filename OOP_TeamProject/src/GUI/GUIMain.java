@@ -9,8 +9,9 @@ public class GUIMain extends JFrame {
 	FirstGUI firstGUI;
 	PrintpplGUI printpplGUI;
 	PathCompareGUI pathCompareGUI;
-	SignUpGUI signUpGUI;
 	LoginGUI LoginGUI;
+	GetInformationGUI getInformationGUI;
+	
 	
 	public void createAndShowGUI() {
 		GUIMain container = new GUIMain();
@@ -27,6 +28,7 @@ public class GUIMain extends JFrame {
 		container.printpplGUI = new PrintpplGUI();
 		container.pathCompareGUI = new PathCompareGUI();
 		container.LoginGUI = new LoginGUI();
+		container.getInformationGUI = new GetInformationGUI();
 		
 		container.add(container.firstGUI);
 		
@@ -36,7 +38,7 @@ public class GUIMain extends JFrame {
 	
 	private void setDefaultGUI(GUIMain container) {
 		container.getContentPane().setLayout(new BorderLayout(0, 1));
-		container.getContentPane().setBackground(Color.black); // 이렇게 해야 검은색이 칠해짐
+		container.getContentPane().setBackground(Color.black);
 		container.setTopMenu();
 		container.setMenuButton();
 	}
@@ -59,7 +61,7 @@ public class GUIMain extends JFrame {
 		if (menuName.contains("search2")) {
 			getContentPane().removeAll();
 			setDefaultGUI(this);
-			getContentPane().add(pathCompareGUI);
+			getContentPane().add(getInformationGUI);
 			revalidate();
 			repaint();
 		}

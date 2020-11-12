@@ -5,13 +5,13 @@ import java.util.*;
 
 public abstract class Manager {
 	Scanner scan = new Scanner(System.in);
-	ArrayList<Manageable> objectList = new ArrayList<>();
+	public ArrayList<Manageable> objectList = new ArrayList<>();
 
 	public void readAll(String fileName, Factory factory) {
 		Scanner scanFile = (Scanner) openFile(fileName, true);
 		Manageable object = null;
 		objectList.clear();
-		
+
 		while (scanFile.hasNext()) {
 			object = factory.create();
 			object.readFile(scanFile);
@@ -38,7 +38,7 @@ public abstract class Manager {
 
 	public void search() {
 		String keyword = null;
-		
+
 		System.out.println("°Ë»ö\n");
 		while (true) {
 			System.out.print(">> ");

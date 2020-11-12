@@ -17,4 +17,13 @@ public class PlaceManagement extends Manager implements Factory {
 	public Manageable create() {
 		return new Place();
 	}
+	
+	public boolean search(String keyword) {
+		for (Manageable palce : objectList) {
+			if (palce.matches(keyword)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
