@@ -22,6 +22,5 @@ public class PrintpplGUI extends JPanel {
 		JScrollPane jscrollPane = new JScrollPane(myTable);
 		jscrollPane.setPreferredSize(new Dimension(370, 480));
 		add(jscrollPane, BorderLayout.CENTER);
-		
 	}
 }

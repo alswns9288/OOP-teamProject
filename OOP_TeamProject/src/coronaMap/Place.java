@@ -43,5 +43,4 @@ public class Place implements Manageable {
 			}
 		}
 	}
-
 }
