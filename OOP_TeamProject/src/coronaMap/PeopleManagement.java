@@ -5,17 +5,17 @@ import manager.*;
 public class PeopleManagement extends Manager implements Factory {
 	static int number;
 	
-	public void run() {
-		readAll();
+	public void run(String fileName) {
+		readAll(fileName);
 //		printAll();
 //		search();
-//		addInformation("PersonPath.txt", this);
-//		readAll("PersonPath.txt", this);
+//		addInformation(fileName, this);
+//		readAll(fileName);
 //		printAll();
 	}
 	
-	public void readAll() {
-		readAll("PersonPath.txt", this);
+	public void readAll(String fileName) {
+		readAll(fileName, this);
 		number = objectList.size();
 	}
 	

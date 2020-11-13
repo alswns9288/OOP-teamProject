@@ -4,8 +4,8 @@ import manager.*;
 
 public class PlaceManagement extends Manager implements Factory {
 	
-	public void run() {
-		readAll("PlaceSample.txt", this);
+	public void run(String fileName) {
+		readAll(fileName, this);
 	}
 	
 	@Override

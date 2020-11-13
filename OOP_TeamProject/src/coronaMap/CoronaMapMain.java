@@ -9,8 +9,8 @@ public class CoronaMapMain {
 	public static UserManager userManager = new UserManager();
 	
 	public static void main(String[] args) {
-		placeManagement.run();
-//		peopleManagement.run();
+		placeManagement.run("PlaceSample.txt");
+		peopleManagement.run("PersonPath.txt");
 		GUIMain start = new GUIMain();
 		start.createAndShowGUI();
 	}

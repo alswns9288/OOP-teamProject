@@ -73,7 +73,7 @@ public class Person implements Manageable {
 	}
 
 	@Override
-	public void addInformation(BufferedWriter writeFile, Scanner scan) { // 입력 받는 형식: 장소1/시간1 장소2/장소2, management로 옮겨야 할 듯?
+	public void addInformation(BufferedWriter writeFile, Scanner scan) { // 입력 받는 형식: 장소1/시간1 장소2/장소2
 		int newNumber = PeopleManagement.number;
 		
 		while (true) {
