@@ -88,7 +88,6 @@ public class GetInformationGUI extends JPanel {
 			user.addInformation(placeField.getText(), timeField.getText());
 			CoronaMapMain.userManager.addList(user);
 		} else {
-			System.out.println("1");
 			user = CoronaMapMain.userManager.fineUser(date);
 			user.addInformation(placeField.getText(), timeField.getText());
 		}

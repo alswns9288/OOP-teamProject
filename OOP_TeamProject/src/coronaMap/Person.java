@@ -1,20 +1,24 @@
 package coronaMap;
 
 import java.io.*;
-import java.text.*;
+import java.time.LocalTime;
 import java.util.*;
 
 import manager.Manageable;
 
 public class Person implements Manageable {
-	ArrayList<String> pathList = new ArrayList<>();
-	ArrayList<String> dateList = new ArrayList<>();
+	public ArrayList<String> pathList = new ArrayList<>();
+	public ArrayList<LocalTime> timeList = new ArrayList<>();
+	public String date;
 	int number;
-
+	
 	@Override
 	public boolean matches(String keyword) {
+		if (!keyword.contentEquals(date)) {
+			return false;
+		}
 		for (int i = 0; i < pathList.size(); i++) {
-			String path = pathList.get(i) + "/" + dateList.get(i);
+			String path = pathList.get(i) + "/" + timeList.get(i);
 			if (keyword.contentEquals(path)) {
 				return true;
 			}
@@ -27,6 +31,7 @@ public class Person implements Manageable {
 		String information = null;
 
 		number = scanFile.nextInt();
+		date = scanFile.next();
 		information = scanFile.nextLine();
 		information = information.trim();
 		split(information);
@@ -34,9 +39,9 @@ public class Person implements Manageable {
 
 	@Override
 	public void print() {
-		System.out.printf("[%d] ", number);
+		System.out.printf("[%d] (%s) ", number, date);
 		for (int i = 0; i < pathList.size(); i++) {
-			System.out.print(pathList.get(i) + "/" + dateList.get(i));
+			System.out.print(pathList.get(i) + "/" + timeList.get(i));
 			if (i == pathList.size() - 1) {
 				break;
 			}
@@ -53,28 +58,13 @@ public class Person implements Manageable {
 		for (String string : registerdArray) {
 			temp = string.split("/");
 			pathList.add(temp[0]);
-			dateList.add(toDateFormat(temp[1])); // x:xx로 나타낸 시간을 time format으로 변경
+			timeList.add(LocalTime.parse(temp[1])); // x:xx로 나타낸 시간을 time format으로 변경
 		}
-	}
-
-	private String toDateFormat(String string) {
-		SimpleDateFormat format = new SimpleDateFormat("HH:mm"); // Date의 format 설정
-		String result = null;
-
-		try {
-			Date date = format.parse(string);
-			result = format.format(date);
-			return result;
-		} catch (ParseException e) {
-			System.out.println("DateFormat Error!" + string);
-			System.exit(1);
-		}
-		return null;
 	}
 
 	@Override
-	public void addInformation(BufferedWriter writeFile, Scanner scan) { // 입력 받는 형식: 장소1/시간1 장소2/장소2
-		int newNumber = PeopleManagement.number;
+	public void addInformation(BufferedWriter writeFile, Scanner scan) { // 입력 받는 형식: 장소1/시간1 장소2/장소2, management로 옮겨야 할 듯?
+		int newNumber = CoronaMapMain.peopleManagement.number;
 		
 		while (true) {
 			String path[] = new String[100];
