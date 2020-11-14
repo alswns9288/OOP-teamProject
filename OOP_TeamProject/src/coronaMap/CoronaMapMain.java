@@ -10,7 +10,7 @@ public class CoronaMapMain {
 	
 	public static void main(String[] args) {
 		placeManagement.run("PlaceSample.txt");
-		peopleManagement.run("PersonPath.txt");
+		peopleManagement.run("PersonPath2.txt");
 		GUIMain start = new GUIMain();
 		start.createAndShowGUI();
 	}
