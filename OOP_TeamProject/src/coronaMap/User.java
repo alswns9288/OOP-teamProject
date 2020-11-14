@@ -4,7 +4,7 @@ import java.util.*;
 
 public class User {
 	ArrayList<String> information = new ArrayList<>();
-	String date;
+	public String date;
 	
 	public User(String date) {
 		this.date = date;

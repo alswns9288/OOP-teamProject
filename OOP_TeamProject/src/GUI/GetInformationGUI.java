@@ -14,6 +14,7 @@ public class GetInformationGUI extends JPanel {
 	JTextField dateField = new JTextField();
 	JTextField timeField = new JTextField();
 	JButton addButton = new JButton("add");
+	JButton searchButton = new JButton("search");
 	DefaultTableModel model;
 	JTable table;
 	String date, time, place;
@@ -24,6 +25,7 @@ public class GetInformationGUI extends JPanel {
 		setUserArea();
 		setShowArea();
 		addActionListener(addButton);
+		addActionListener(searchButton);
 	}
 
 	private void setShowArea() {
@@ -39,16 +41,19 @@ public class GetInformationGUI extends JPanel {
 	}
 
 	private void setUserArea() {
-		inner.setPreferredSize(new Dimension(400, 40));
-		addButton.setPreferredSize(new Dimension(60, 30));
+		inner.setPreferredSize(new Dimension(400, 80));
+		addButton.setPreferredSize(new Dimension(80, 30));
 		
 		setSizeAndAdd(dateField, placeField, timeField);
+		
 		inner.add(addButton);
+		searchButton.setPreferredSize(new Dimension(80, 30));
+		inner.add(searchButton);
 	}
 
 	private void setSizeAndAdd(JComponent... objects) {
 		for (int i = 0; i < objects.length; i++) {
-			objects[i].setPreferredSize(new Dimension(100, 30));;
+			objects[i].setPreferredSize(new Dimension(120, 30));;
 			inner.add(objects[i]);
 		}	
 		add(inner, BorderLayout.NORTH);
@@ -63,25 +68,31 @@ public class GetInformationGUI extends JPanel {
 	public void addUserPath() {	
 		time = timeField.getText();
 		place = placeField.getText();
-		
+
 		if (!CoronaMapMain.placeManagement.search(place)) {
 			JOptionPane.showMessageDialog(null, "Unregistered place! " + place);
 			clearTextField();
 			return;
 		}
-		
-		if (dateField.getText().length() != 0) {
-			date = dateField.getText(); // 받은 날짜를 저장 (새로운 객체 생성 방지로도 사용)	
-		} else { // 날짜를 입력하지 않으면: 마지막 날짜로 선택됨
+
+		if (dateField.getText().length() == 0) { // 날짜에 아무것도 입력하지 않으면 이전 날짜에 추가
 			user.addInformation(placeField.getText(), timeField.getText());
 			clearTextField();
 			addTableRow();
 			return;
 		}
 		
-		user = new User(date);
-		user.addInformation(placeField.getText(), timeField.getText());
-		CoronaMapMain.userManager.addList(user);
+		date = dateField.getText();
+		if (CoronaMapMain.userManager.fineUser(date) == null) {
+			user = new User(date);
+			user.addInformation(placeField.getText(), timeField.getText());
+			CoronaMapMain.userManager.addList(user);
+		} else {
+			System.out.println("1");
+			user = CoronaMapMain.userManager.fineUser(date);
+			user.addInformation(placeField.getText(), timeField.getText());
+		}
+		
 		clearTextField();
 		addTableRow();
 	}
@@ -105,6 +116,9 @@ public class GetInformationGUI extends JPanel {
 			
 			if (button.getText().contentEquals("add")) {
 				addUserPath();
+			}
+			if (button.getText().contentEquals("search")) {
+				
 			}
 		}
 	}
