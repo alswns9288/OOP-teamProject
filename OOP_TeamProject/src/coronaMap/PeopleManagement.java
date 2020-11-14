@@ -23,4 +23,13 @@ public class PeopleManagement extends Manager implements Factory {
 	public Manageable create() {
 		return new Person();
 	}
+	
+	public boolean search(String keyword) {
+		for (Manageable person : objectList) {
+			if (person.matches(keyword)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

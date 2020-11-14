@@ -5,22 +5,25 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 
+import coronaMap.PeopleManagement;
+
 import java.awt.event.*;
 import java.util.ArrayList;
 
 public class PathCompareGUI extends JPanel {
+	PeopleManagement manage = new PeopleManagement();
 	int dangerRate = 1;
 	ArrayList<String> myPlace = new ArrayList<String>();
 	ArrayList<String> myDay = new ArrayList<String>();
 	ArrayList<String> myTime = new ArrayList<String>();
 
 	public PathCompareGUI( String[] inputPlace, 
-			String[] inputDay, String[] inputTime) { // 외부로부터  장소, 날짜, 시간을 배열 형태로 전달받음
-		for(int i = 0; i<inputPlace.length; i++) {
-			myPlace.add(inputPlace[i]);
-		}
+			String[] inputDay, String[] inputTime) { // 외부로부터  날짜, 장소, 시간을 배열 형태로 전달받음
 		for(int i = 0; i<inputDay.length; i++) {
 			myDay.add(inputDay[i]);
+		}
+		for(int i = 0; i<inputPlace.length; i++) {
+			myPlace.add(inputPlace[i]);
 		}
 		for(int i = 0; i<inputTime.length; i++) {
 			myTime.add(inputTime[i]);
@@ -59,12 +62,12 @@ public class PathCompareGUI extends JPanel {
 	}
 
 	private void setMyPath() {
-		String header[] = {"Me", "Place", "Day","Time"}; // "나", "위치", "날짜", "시간"
+		String header[] = {"Me", "Day", "Place","Time"}; // "나", "위치", "날짜", "시간"
 		String contents[][] = new String[myPlace.size()][4];
 		for(int i = 0; i<myPlace.size(); i++) {
 			contents[i][0] = null;
-			contents[i][1] = myPlace.get(i);
-			contents[i][2] = myDay.get(i);
+			contents[i][1] = myDay.get(i);
+			contents[i][2] = myPlace.get(i);
 			contents[i][3] = myTime.get(i);
 		}
 		
@@ -75,25 +78,67 @@ public class PathCompareGUI extends JPanel {
 	}
 
 	private void setPositivesPath() {
-		String header[] = {"No. of postives", "Place", "Day", "Time"}; // "확진자 번호", "위치", "날짜", "시간"
+		String header[] = {"No. of postives", "Place", "Day", "Time"}; // "확진자 번호", "날짜", "위치", "시간"
 																
 		// 검색기능을 통해 content 데이터 구축
-		/*
-		PlaceManagement manage = new PlaceManagement();
-		int overlapNo = 0; //겹치는 경로의 수 
-		String contents[][] = new String[overlapNo][4];
-		for (int i = 0; i<overlapNo; i++) {
-			//내용 추가
+		
+		String contents[][] = {};
+		
+		for (int i = 0; i<myPlace.size(); i++) {
+			int rate = 1;
+			String placeTmp = myPlace.get(i);
+			if (manage.search(placeTmp)) {
+				String dayTmp = myDay.get(i);
+				if(manage.search(dayTmp)) {
+					String timeTmp = myTime.get(i);
+					if(manage.search(timeTmp)) {
+						rate = 5;
+					}
+					else
+						 rate = 3;
+				}
+				else
+					rate = 2;
+				contents[i][0] = rate+"";
+				contents[i][1] = myDay.get(i);
+				contents[i][2] = myPlace.get(i);
+				contents[i][3] = myTime.get(i);
+			}
 		}
-		*/
-		String contents[][] = {
-				{"No1", "Demo Place1", "Demo Day1", "Demo Time1"}, //"번호1", "데모위치1", "데모날짜1", "데모시간1"
-				{"No2", "Demo Place2", "Demo Day2", "Demo Time2"},
-				{"No3", "Demo Place3", "Demo Day3", "Demo Time3"}
-		};
 		JTable myTable = new JTable(contents, header);
 		JScrollPane jscrollPane = new JScrollPane(myTable);
 		jscrollPane.setPreferredSize(new Dimension(400, 300));
 		add(jscrollPane, BorderLayout.CENTER);
+	}
+	
+	int findTotalRate() {
+		int key = 0;
+		for (int i = 0; i<myPlace.size(); i++) {
+			String placeTmp = myPlace.get(i);
+			if (manage.search(placeTmp)) {
+				String dayTmp = myDay.get(i);
+				if(manage.search(dayTmp)) {
+					String timeTmp = myTime.get(i);
+					if(manage.search(timeTmp)) {
+						key += 100;
+					}
+					else
+						key += 10;
+				}
+				else
+					key += 1;
+			}
+		}
+		
+		if(key == 0) 
+			return 1;
+		else if(key<10)
+			return 2;
+		else if(key<20)
+			return 3;
+		else if(key<100)
+			return 4;
+		else
+			return 5;
 	}
 }

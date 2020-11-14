@@ -14,8 +14,8 @@ public class PlaceManagement extends Manager implements Factory {
 	}
 	
 	public boolean search(String keyword) {
-		for (Manageable palce : objectList) {
-			if (palce.matches(keyword)) {
+		for (Manageable place : objectList) {
+			if (place.matches(keyword)) {
 				return true;
 			}
 		}
