@@ -20,7 +20,7 @@ public class GUIMain extends JFrame {
 		container.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		container.setLocation(500, 50);
 		container.setPreferredSize(new Dimension(400, 730));
-		container.setResizable(false);
+	//	container.setResizable(false);
 		
 		setDefaultGUI(container);
 		
