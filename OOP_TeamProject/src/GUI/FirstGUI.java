@@ -7,14 +7,19 @@ import java.time.format.DateTimeFormatter;
 
 import javax.swing.*;
 
+import GUI.GUIMain.MyActionListener;
+import coronaMap.CoronaMapMain;
+
 public class FirstGUI extends JPanel {
 	JPanel background;
+	JTextField dateField;
 	JButton previousDay;
 	JButton nextDay;
 	JButton number;
 	ImageIcon image = new ImageIcon("background.png");
 	LocalDate date = LocalDate.now();
 	DateTimeFormatter toString = DateTimeFormatter.ofPattern("Y / M / d");
+	int infectedNumber;
 	
 	public FirstGUI() {
 		setLayout(null);
@@ -26,8 +31,7 @@ public class FirstGUI extends JPanel {
 			public void mousePressed(MouseEvent e) {
 				previousDay.setIcon(new ImageIcon("arrow_left_clicked.png"));
 				date = date.minusDays(1);
-				System.out.println(date);
-				modifyNumber();
+				modifyNumberAndDate();
 			}
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -40,8 +44,7 @@ public class FirstGUI extends JPanel {
 			public void mousePressed(MouseEvent e) {
 				nextDay.setIcon(new ImageIcon("arrow_right_clicked.png"));
 				date = date.plusDays(1);
-				System.out.println(date);
-				modifyNumber();
+				modifyNumberAndDate();
 			}
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -50,18 +53,19 @@ public class FirstGUI extends JPanel {
 		});
 	}
 	
-	private void modifyNumber() {
-		// TODO Auto-generated method stub
-		
+	private void modifyNumberAndDate() {
+		dateField.setText(date.format(toString));
+		infectedNumber = CoronaMapMain.peopleManagement.searchNumber(date.format(DateTimeFormatter.ofPattern("M/d")));
+		number.setText(infectedNumber + "∏Ì");
 	}
 
 	private void setInfectedNumber() {
-		number = new JButton("xx", new ImageIcon("showNumber.png"));
-		number.setLocation(150, 300);
+		number = new JButton(infectedNumber + "∏Ì", new ImageIcon("showNumber.png"));
+		number.setLocation(150, 350);
 		number.setSize(90, 70);
 		number.setHorizontalTextPosition(JButton.HORIZONTAL);
 		number.setForeground(Color.white);
-		number.setFont(new Font("∞ÌµÒ√º", Font.BOLD, 20));
+		number.setFont(new Font("∞ÌµÒ√º", Font.BOLD, 18));
 		hideJButton(number);
 	}
 
@@ -70,20 +74,22 @@ public class FirstGUI extends JPanel {
 	}
 
 	private void setButtonAndText() {
-		previousDay = new JButton(new ImageIcon("arrow_left.png"));
+		previousDay = new JButton("pre", new ImageIcon("arrow_left.png"));
+		previousDay.setFont(new Font("∞ÌµÒ√º", Font.BOLD, 0));
 		previousDay.setLocation(10, 10);
-		previousDay.setSize(50, 50);
+		previousDay.setSize(55, 50);
 		hideJButton(previousDay);
 
-		nextDay = new JButton(new ImageIcon("arrow_right.png"));
-		nextDay.setLocation(330, 10);
-		nextDay.setSize(50, 50);
+		nextDay = new JButton("next", new ImageIcon("arrow_right.png"));
+		nextDay.setFont(new Font("∞ÌµÒ√º", Font.BOLD, 0));
+		nextDay.setLocation(325, 10);
+		nextDay.setSize(55, 50);
 		hideJButton( nextDay);
 
-		JTextField field = new JTextField(date.format(toString));
-		field.setLocation(150, 10);
-		field.setSize(100, 50);
-		add(field);
+		dateField = new JTextField(date.format(toString));
+		dateField.setLocation(150, 10);
+		dateField.setSize(100, 50);
+		add(dateField);
 	}
 
 	private void hideJButton(JButton button) {

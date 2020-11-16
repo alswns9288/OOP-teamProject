@@ -32,4 +32,14 @@ public class PeopleManagement extends Manager implements Factory {
 		}
 		return false;
 	}
+	
+	public int searchNumber(String keyword) {
+		int result = 0;
+		for (Manageable person : objectList) {
+			if (person.matches(keyword)) {
+				result++;
+			}
+		}
+		return result;
+	}
 }

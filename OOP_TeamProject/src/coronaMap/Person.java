@@ -14,8 +14,8 @@ public class Person implements Manageable {
 	
 	@Override
 	public boolean matches(String keyword) {
-		if (!keyword.contentEquals(date)) {
-			return false;
+		if (keyword.contentEquals(date)) {
+			return true;
 		}
 		for (int i = 0; i < pathList.size(); i++) {
 			String path = pathList.get(i) + "/" + timeList.get(i);
