@@ -89,6 +89,7 @@ public class FirstGUI extends JPanel {
 		dateField = new JTextField(date.format(toString));
 		dateField.setLocation(150, 10);
 		dateField.setSize(100, 50);
+		dateField.setFont(new Font("∞ÌµÒ√º", Font.BOLD, 15));
 		add(dateField);
 	}
 
