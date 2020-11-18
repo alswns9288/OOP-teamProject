@@ -16,8 +16,6 @@ public class GUIMain extends JFrame {
 	JButton search2;
 	JButton signIn;
 	
-	
-	
 	public void createAndShowGUI() {
 		GUIMain container = new GUIMain();
 		
@@ -124,7 +122,6 @@ public class GUIMain extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			//JButton button = (JButton) e.getSource();
-
 			if (e.getSource()==main) {
 				changeGUI("main");
 				main.setBackground(Color.LIGHT_GRAY);
