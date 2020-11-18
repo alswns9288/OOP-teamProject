@@ -11,6 +11,11 @@ public class GUIMain extends JFrame {
 	PathCompareGUI pathCompareGUI;
 	LoginGUI LoginGUI;
 	GetInformationGUI getInformationGUI;
+	JButton main;
+	JButton search1;
+	JButton search2;
+	JButton signIn;
+	
 	
 	
 	public void createAndShowGUI() {
@@ -51,21 +56,21 @@ public class GUIMain extends JFrame {
 			revalidate();
 			repaint();
 		}
-		if (menuName.contains("search1")) {
+		if (menuName.contains("확진자")) {
 			getContentPane().removeAll();
 			setDefaultGUI(this);
 			getContentPane().add(printpplGUI);
 			revalidate();
 			repaint();
 		}
-		if (menuName.contains("search2")) {
+		if (menuName.contains("경로비교")) {
 			getContentPane().removeAll();
 			setDefaultGUI(this);
 			getContentPane().add(getInformationGUI);
 			revalidate();
 			repaint();
 		}
-		if (menuName.contains("sign in")) {
+		if (menuName.contains("로그인")) {
 			getContentPane().removeAll();
 			setDefaultGUI(this);
 			getContentPane().add(LoginGUI);
@@ -78,24 +83,23 @@ public class GUIMain extends JFrame {
 		menu = new JPanel();
 		menu.setLayout(new GridLayout(1, 4));
 		menu.setPreferredSize(new Dimension(400, 52));
-		
 		add(menu, BorderLayout.NORTH);
 	}
 
 	private void setMenuButton() {
-		JButton main = new JButton("main");
+		main = new JButton("main");
 		main.setSize(50, 100);
 		hideJButton(menu, main);
 		
-		JButton search1 = new JButton("search1");
+		search1 = new JButton("확진자");
 		search1.setSize(50, 100);
 		hideJButton(menu, search1);
 		
-		JButton search2 = new JButton("search2");
+		search2 = new JButton("경로비교");
 		search2.setSize(50, 100);
 		hideJButton(menu, search2);
 		
-		JButton signIn = new JButton("sign in");
+		signIn = new JButton("로그인");
 		signIn.setSize(50, 100);
 		hideJButton(menu, signIn);
 		
@@ -104,7 +108,8 @@ public class GUIMain extends JFrame {
 	
 	private void hideJButton(JPanel panel, JButton button) {
 		button.setBorderPainted(false);
-		button.setContentAreaFilled(false);
+		//button.setContentAreaFilled(false);
+		button.setBackground(Color.WHITE);
 		button.setFocusPainted(false);
 		panel.add(button);
 	}
@@ -118,19 +123,23 @@ public class GUIMain extends JFrame {
 	class MyActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			JButton button = (JButton) e.getSource();
-			
-			if (button.getText().contentEquals("main")) {
+			//JButton button = (JButton) e.getSource();
+
+			if (e.getSource()==main) {
 				changeGUI("main");
+				main.setBackground(Color.LIGHT_GRAY);
 			}
-			if (button.getText().contentEquals("search1")) {
-				changeGUI("search1");
+			if (e.getSource()==search1) {
+				changeGUI("확진자");
+				search1.setBackground(Color.LIGHT_GRAY);
 			}
-			if (button.getText().contentEquals("search2")) {
-				changeGUI("search2");
+			if (e.getSource()==search2) {
+				changeGUI("경로비교");
+				search2.setBackground(Color.LIGHT_GRAY);
 			}
-			if (button.getText().contentEquals("sign in")) {
-				changeGUI("sign in");
+			if (e.getSource()==signIn) {
+				changeGUI("로그인");
+				signIn.setBackground(Color.LIGHT_GRAY);
 			}
 		}
 	}
