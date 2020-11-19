@@ -3,7 +3,7 @@ package coronaMap;
 import java.util.*;
 
 public class User {
-	ArrayList<String> information = new ArrayList<>();
+	public ArrayList<String> information = new ArrayList<>();
 	public String date;
 	
 	public User(String date) {
