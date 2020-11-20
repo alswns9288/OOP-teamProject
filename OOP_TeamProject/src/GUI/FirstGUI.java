@@ -11,15 +11,14 @@ import GUI.GUIMain.MyActionListener;
 import coronaMap.CoronaMapMain;
 
 public class FirstGUI extends JPanel {
+	private static LocalDate date = LocalDate.now();
+	int infectedNumber;
 	JPanel background;
 	JTextField dateField;
 	JButton previousDay;
 	JButton nextDay;
 	JButton number;
 	ImageIcon image = new ImageIcon("background.png");
-	LocalDate date = LocalDate.now();
-	DateTimeFormatter toString = DateTimeFormatter.ofPattern("Y / M / d");
-	int infectedNumber;
 	
 	public FirstGUI() {
 		setLayout(null);
@@ -53,8 +52,12 @@ public class FirstGUI extends JPanel {
 		});
 	}
 	
+	public static LocalDate getDate() {
+		return date;
+	}
+	
 	private void modifyNumberAndDate() {
-		dateField.setText(date.format(toString));
+		dateField.setText(date.toString());
 		infectedNumber = CoronaMapMain.peopleManagement.searchNumber(date.format(DateTimeFormatter.ofPattern("M/d")));
 		number.setText(infectedNumber + "∏Ì");
 	}
@@ -86,7 +89,7 @@ public class FirstGUI extends JPanel {
 		nextDay.setSize(55, 50);
 		hideJButton( nextDay);
 
-		dateField = new JTextField(date.format(toString));
+		dateField = new JTextField(date.toString());
 		dateField.setLocation(150, 10);
 		dateField.setSize(100, 50);
 		dateField.setFont(new Font("∞ÌµÒ√º", Font.BOLD, 15));
