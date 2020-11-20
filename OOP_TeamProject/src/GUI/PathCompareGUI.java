@@ -24,6 +24,7 @@ public class PathCompareGUI extends JPanel {
 	String myCity = "Yountonggu";
 	ArrayList<String> myPlace = new ArrayList<String>();
 	ArrayList<String> myTime = new ArrayList<String>();
+	ArrayList<Integer> everyDanger = new ArrayList<Integer>();
 	
 	public PathCompareGUI() {
 		setLayout(new BorderLayout());
@@ -33,6 +34,7 @@ public class PathCompareGUI extends JPanel {
 	}
 	
 	private void setResult() {
+		computeResultDanger(everyDanger);
 		String result = myDay + "Danger Rate : "+dangerRate; 
 		String necessary = null;
 		switch (dangerRate) {
@@ -62,8 +64,8 @@ public class PathCompareGUI extends JPanel {
 	
 	private void setMys() {
 		int NumOfMyPath = uManage.userList.size();
+		myDay = uManage.userList.get(0).date;
 		for (int i = 0; i<NumOfMyPath; i++) {
-			myDay = uManage.userList.get(i).date;
 			split(uManage.userList.get(i).information);
 		}
 	}
@@ -81,11 +83,17 @@ public class PathCompareGUI extends JPanel {
 		setMys();
 		String header[] = {"Me", "Day", "Place","Time"};
 		String contents[][] = new String[myPlace.size()][4];
-		for(int i = 0; i<myPlace.size(); i++) {
-			contents[i][0] = myCity;
-			contents[i][1] = myName;
+		contents[0][0] = myCity;
+		contents[0][1] = myName;
+		contents[0][2] = myPlace.get(0);
+		contents[0][2] = myTime.get(0);
+		int i = 1;
+		while(i<myPlace.size()) {
+			contents[i][0] = null;
+			contents[i][1] = null;
 			contents[i][2] = myPlace.get(i);
 			contents[i][3] = myTime.get(i);
+			i++;
 		}
 		
 		JTable myTable = new JTable(contents, header);
@@ -97,32 +105,45 @@ public class PathCompareGUI extends JPanel {
 	private void setPositivesPath() {
 		String header[] = {"City", "Danger Rate", "Place", "Time"};
 		String contents[][] = null;
+		contents[0][0] = myCity;
 		//contents 데이터 구축
-		/*
-		for (int i = 0; i<myPlace.size(); i++) {
-			int rate = 1;
-			String placeTmp = myPlace.get(i);
-			if (manage.search(placeTmp)) {
-				String dayTmp = myDay.get(i);
-				if(manage.search(dayTmp)) {
-					String timeTmp = myTime.get(i); // LocalTime에서 비교기능이 있는 메소드를 찾기
-					if(manage.search(timeTmp)) {
-						rate = 5;
-					}
-					else
-						 rate = 3;
-				}
-				else
-					rate = 2;
-				contents[i][0] = rate+"";
-				// 검색기능을 통해 content 데이터 구축!!
-				
-			}
-		}*/
+		
 		JTable myTable = new JTable(contents, header);
 		JScrollPane jscrollPane = new JScrollPane(myTable);
 		jscrollPane.setPreferredSize(new Dimension(400, 300));
 		add(jscrollPane, BorderLayout.PAGE_END);
 	}
-	//최종 위험도 알려주는 알고리즘 구축
+	
+	private int computeDangerRate(int num) {
+		int danger = 1;
+		if (manage.search(myPlace.get(num))) {
+			danger++;
+			if(/*확진자 이후에 방문*/) {
+				danger++;
+				if(/*확진자와 와벽히 겹침*/) {
+					danger += 2;
+				}
+			}
+		}
+		everyDanger.add(danger);
+		return danger;
+	}
+	
+	private int computeResultDanger(ArrayList<Integer> inputDanger) {
+		int result = 1;
+		ArrayList<Integer> ind = new ArrayList<Integer>();
+		if(inputDanger.contains(2)) 
+			result = 2;
+		for(int i = 0; i<inputDanger.size(); i++) {
+			ind.add(inputDanger.indexOf(3));
+		}
+		if(ind.size()==1) 
+			result = 3;
+		else if(ind.size()>1)
+			result = 4;
+		if(inputDanger.contains(5))
+			result = 5;
+		
+		return result;
+	}
 }
