@@ -1,12 +1,13 @@
 package coronaMap;
 
+import java.time.LocalDate;
 import java.util.*;
 
 public class User {
 	public ArrayList<String> information = new ArrayList<>();
-	public String date;
+	public LocalDate date;
 	
-	public User(String date) {
+	public User(LocalDate date) {
 		this.date = date;
 	}
 	

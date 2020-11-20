@@ -62,11 +62,13 @@ public class GUIMain extends JFrame {
 		}
 		if (menuName.contains("경로비교")) {
 			getContentPane().removeAll();
+			date = FirstGUI.getDate();
 			setDefaultGUI(this);
 			getContentPane().add(getInformationGUI);
 		}
 		if (menuName.contains("로그인")) {
 			getContentPane().removeAll();
+			date = FirstGUI.getDate();
 			setDefaultGUI(this);
 			getContentPane().add(LoginGUI);
 		}

@@ -1,5 +1,6 @@
 package manager;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import coronaMap.User;
@@ -11,9 +12,9 @@ public class UserManager {
 		userList.add(user);
 	}
 	
-	public User fineUser(String keyword) {
+	public User fineUser(LocalDate date) {
 		for (User user: userList) {
-			if (keyword.contentEquals(user.date)) {
+			if (date.toString().contentEquals(user.date.toString())) {
 				return user;
 			}
 		}

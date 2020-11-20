@@ -2,22 +2,24 @@ package GUI;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-
 import java.awt.*;
 import java.awt.event.*;
+import java.time.LocalDate;
+
 import coronaMap.*;
 
 
 public class GetInformationGUI extends JPanel {
 	JPanel inner = new JPanel();
-	JTextField placeField = new JTextField();
-	JTextField dateField = new JTextField();
-	JTextField timeField = new JTextField();
+	JTextField placeField = new JTextField("place");
+	JTextField timeField = new JTextField("time");
+	JTextField cityField = new JTextField("city");
 	JButton addButton = new JButton("add");
 	JButton searchButton = new JButton("search");
 	DefaultTableModel model;
 	JTable table;
-	String date, time, place;
+	String time, place;
+	LocalDate date;
 	User user;
 	
 	public GetInformationGUI() {
@@ -29,7 +31,7 @@ public class GetInformationGUI extends JPanel {
 	}
 
 	private void setShowArea() {
-		String header[] = {"Date", "Place", "Time"};
+		String header[] = {"City", "Place", "Time"};
 		String contents[][] = {};
 		
 		model = new DefaultTableModel(contents, header);
@@ -44,7 +46,7 @@ public class GetInformationGUI extends JPanel {
 		inner.setPreferredSize(new Dimension(400, 80));
 		addButton.setPreferredSize(new Dimension(80, 30));
 		
-		setSizeAndAdd(dateField, placeField, timeField);
+		setSizeAndAdd(cityField, placeField, timeField);
 		
 		inner.add(addButton);
 		searchButton.setPreferredSize(new Dimension(80, 30));
@@ -66,6 +68,7 @@ public class GetInformationGUI extends JPanel {
 	}
 
 	public void addUserPath() {	
+		date = FirstGUI.getDate();
 		time = timeField.getText();
 		place = placeField.getText();
 
@@ -74,15 +77,7 @@ public class GetInformationGUI extends JPanel {
 			clearTextField();
 			return;
 		}
-
-		if (dateField.getText().length() == 0) { // 날짜에 아무것도 입력하지 않으면 이전 날짜에 추가
-			user.addInformation(placeField.getText(), timeField.getText());
-			clearTextField();
-			addTableRow();
-			return;
-		}
 		
-		date = dateField.getText();
 		if (CoronaMapMain.userManager.fineUser(date) == null) {
 			user = new User(date);
 			user.addInformation(placeField.getText(), timeField.getText());
@@ -103,7 +98,7 @@ public class GetInformationGUI extends JPanel {
 	}
 
 	private void clearTextField() {
-		dateField.setText("");
+		cityField.setText("");
 		timeField.setText("");
 		placeField.setText("");
 	}
