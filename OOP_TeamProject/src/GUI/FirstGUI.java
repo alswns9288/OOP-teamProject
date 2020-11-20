@@ -9,6 +9,7 @@ import javax.swing.*;
 
 import GUI.GUIMain.MyActionListener;
 import coronaMap.CoronaMapMain;
+import coronaMap.PeopleManagement;
 
 public class FirstGUI extends JPanel {
 	private static LocalDate date = LocalDate.now();
@@ -57,8 +58,10 @@ public class FirstGUI extends JPanel {
 	}
 	
 	private void modifyNumberAndDate() {
+		PeopleManagement peopleManagement = PeopleManagement.getInstance();
+		
 		dateField.setText(date.toString());
-		infectedNumber = CoronaMapMain.peopleManagement.searchNumber(date.format(DateTimeFormatter.ofPattern("M/d")));
+		infectedNumber = peopleManagement.searchNumber(date.format(DateTimeFormatter.ofPattern("M/d")));
 		number.setText(infectedNumber + "Έν");
 	}
 

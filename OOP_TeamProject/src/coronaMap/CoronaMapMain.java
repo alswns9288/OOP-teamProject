@@ -4,13 +4,19 @@ import GUI.*;
 import manager.UserManager;
 
 public class CoronaMapMain {
-	public static PlaceManagement placeManagement = new PlaceManagement();
-	public static PeopleManagement peopleManagement = new PeopleManagement();
-	public static UserManager userManager = new UserManager();
 	
 	public static void main(String[] args) {
+		CoronaMapMain main = new CoronaMapMain();
+		main.mainRun();
+	}
+	
+	private void mainRun() {
+		PlaceManagement placeManagement = PlaceManagement.getInstance();
 		placeManagement.run("PlaceSample.txt");
+		
+		PeopleManagement peopleManagement = PeopleManagement.getInstance();
 		peopleManagement.run("PersonPath.txt");
+		
 		GUIMain start = new GUIMain();
 		start.createAndShowGUI();
 	}

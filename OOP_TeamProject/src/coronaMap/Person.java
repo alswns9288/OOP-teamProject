@@ -63,8 +63,10 @@ public class Person implements Manageable {
 	}
 
 	@Override
-	public void addInformation(BufferedWriter writeFile, Scanner scan) { // 입력 받는 형식: 장소1/시간1 장소2/장소2, management로 옮겨야 할 듯?
-		int newNumber = CoronaMapMain.peopleManagement.number;
+	public void addInformation(BufferedWriter writeFile, Scanner scan) { // 입력 받는 형식: 장소1/시간1 장소2/장소2
+		PeopleManagement peopleManagement = PeopleManagement.getInstance();
+		
+		int newNumber = peopleManagement.number;
 		
 		while (true) {
 			String path[] = new String[100];

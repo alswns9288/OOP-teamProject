@@ -1,14 +1,17 @@
 package GUI;
 
-import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+import coronaMap.CoronaMapMain;
+import manager.UserManager;
+
 public class LoginGUI extends JPanel {
-	
+	UserManager userManager = UserManager.getInstance();
 	JPanel background;
 	JButton signUpButton;
 	JButton loginButton;
+	JTextField Username;
 
 	public LoginGUI() {
 		setLayout(null);
@@ -26,14 +29,15 @@ public class LoginGUI extends JPanel {
 		loginButton.addActionListener(new ActionListener() {		
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				userManager.login(Username.getText());
+				Username.setText("");
 				JOptionPane.showMessageDialog(null, "로그인 되었습니다.");
-				//dispose();
 			}
 		});
 	}
-		
+	
 	private void createTextField() {
-		JTextField Username = new JTextField();
+		Username = new JTextField();
 		Username.setLocation(150, 55);
 		Username.setSize(150, 30);
 		add(Username);

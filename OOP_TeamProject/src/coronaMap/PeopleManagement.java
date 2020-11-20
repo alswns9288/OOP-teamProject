@@ -3,7 +3,17 @@ package coronaMap;
 import manager.*;
 
 public class PeopleManagement extends Manager implements Factory {
-	static int number;
+	private static PeopleManagement instance;
+	int number;
+	
+	private PeopleManagement() {}
+	
+	public static PeopleManagement getInstance() {
+		if(instance == null) {
+			instance = new PeopleManagement();
+		}
+		return instance;
+	}
 	
 	public void run(String fileName) {
 		readAll(fileName);

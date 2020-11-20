@@ -1,6 +1,10 @@
 package GUI;
 
 import javax.swing.*;
+
+import coronaMap.CoronaMapMain;
+import manager.UserManager;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.time.LocalDate;
@@ -41,7 +45,7 @@ public class GUIMain extends JFrame {
 		container.setVisible(true);
 	}
 
-	private void setDefaultGUI(GUIMain container) {
+	private static void setDefaultGUI(GUIMain container) {
 		container.getContentPane().setLayout(new BorderLayout(0, 1));
 		container.getContentPane().setBackground(Color.black);
 		container.setTopMenu();
@@ -84,6 +88,9 @@ public class GUIMain extends JFrame {
 	}
 
 	private void setMenuButton() {
+		UserManager userManager = UserManager.getInstance();
+		String userID = userManager.getID();
+
 		if (date == null) {
 			main = new JButton("main");
 		} else {
@@ -100,7 +107,11 @@ public class GUIMain extends JFrame {
 		search2.setSize(50, 100);
 		hideJButton(menu, search2);
 
-		signIn = new JButton("로그인");
+		if (userID == null) {
+			signIn = new JButton("로그인");
+		} else {
+			signIn = new JButton(userID);
+		}
 		signIn.setSize(50, 100);
 		hideJButton(menu, signIn);
 

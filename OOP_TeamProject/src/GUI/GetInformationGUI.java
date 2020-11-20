@@ -7,6 +7,7 @@ import java.awt.event.*;
 import java.time.LocalDate;
 
 import coronaMap.*;
+import manager.UserManager;
 
 
 public class GetInformationGUI extends JPanel {
@@ -68,22 +69,24 @@ public class GetInformationGUI extends JPanel {
 	}
 
 	public void addUserPath() {	
+		PlaceManagement placeManagement = PlaceManagement.getInstance();
+		UserManager userManager = UserManager.getInstance();
 		date = FirstGUI.getDate();
 		time = timeField.getText();
 		place = placeField.getText();
 
-		if (!CoronaMapMain.placeManagement.search(place)) {
+		if (!placeManagement.search(place)) {
 			JOptionPane.showMessageDialog(null, "Unregistered place! " + place);
 			clearTextField();
 			return;
 		}
 		
-		if (CoronaMapMain.userManager.fineUser(date) == null) {
+		if (userManager.fineUser(date) == null) {
 			user = new User(date);
 			user.addInformation(placeField.getText(), timeField.getText());
-			CoronaMapMain.userManager.addList(user);
+			userManager.addList(user);
 		} else {
-			user = CoronaMapMain.userManager.fineUser(date);
+			user = userManager.fineUser(date);
 			user.addInformation(placeField.getText(), timeField.getText());
 		}
 		

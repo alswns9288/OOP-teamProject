@@ -3,6 +3,16 @@ package coronaMap;
 import manager.*;
 
 public class PlaceManagement extends Manager implements Factory {
+	private static PlaceManagement instance;
+	
+	private PlaceManagement() {}
+	
+	public static PlaceManagement getInstance() {
+		if(instance == null) {
+			instance = new PlaceManagement();
+		}
+		return instance;
+	}
 	
 	public void run(String fileName) {
 		readAll(fileName, this);
