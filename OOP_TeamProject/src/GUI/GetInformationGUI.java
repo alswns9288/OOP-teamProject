@@ -12,14 +12,15 @@ import manager.UserManager;
 
 public class GetInformationGUI extends JPanel {
 	JPanel inner = new JPanel();
-	JTextField placeField = new JTextField("place");
-	JTextField timeField = new JTextField("time");
-	JTextField cityField = new JTextField("city");
+	JTextField placeField = new JTextField();
+	JTextField timeField = new JTextField();
+	JTextField cityField = new JTextField();
 	JButton addButton = new JButton("add");
 	JButton searchButton = new JButton("search");
 	DefaultTableModel model;
 	JTable table;
 	String time, place;
+	String city = "ΏµΕλ±Έ";
 	LocalDate date;
 	User user;
 	
@@ -74,7 +75,7 @@ public class GetInformationGUI extends JPanel {
 		date = FirstGUI.getDate();
 		time = timeField.getText();
 		place = placeField.getText();
-
+		
 		if (!placeManagement.search(place)) {
 			JOptionPane.showMessageDialog(null, "Unregistered place! " + place);
 			clearTextField();
@@ -96,7 +97,7 @@ public class GetInformationGUI extends JPanel {
 
 	private void addTableRow() {
 		model = (DefaultTableModel)table.getModel();
-		Object[] row = { date, place, time };
+		Object[] row = { city, place, time };
 		model.addRow(row);
 	}
 

@@ -31,4 +31,9 @@ public class PlaceManagement extends Manager implements Factory {
 		}
 		return false;
 	}
+	public void printList() {
+		for (Manageable place : objectList) {
+			place.print();
+		}
+	}
 }
