@@ -110,9 +110,10 @@ public class PathCompareGUI extends JPanel {
 		for(int i = 0; i<myPlace.size(); i++) {
 			contents[i][0] = null;
 			contents[i][1] = computeDangerRate(i)+"";
+			ArrayList<String> ptemp = null;
 			if(pmanage.search(myPlace.get(i))) {
-				contents[i][2] = myPlace.get(i);
-				contents[i][3] = myTime.get(i)+"";
+				contents[i][2] = null;//확진자의 위치
+				contents[i][3] = null;//확진자의 시간
 			}
 		}
 		contents[0][0] = myCity;
@@ -128,11 +129,12 @@ public class PathCompareGUI extends JPanel {
 		int danger = 1;
 		if (pmanage.search(myPlace.get(num))) {
 			danger++;
-			if(/*앞에서 검색한!! 확진자 이전에 방문*/) {
+			LocalTime positivesTime = null;//null값에 위에서 겹친 확진자의 시간이 들어간다.
+			if(myTime.get(num).isBefore(positivesTime)) {
 				danger++;
-				if(/*앞에서 검색한!! 확진자와 완벽히 겹침*/) {
-					danger += 2;
-				}
+			}
+			if(myTime.get(num).equals(positivesTime)) {
+				danger += 3;
 			}
 		}
 		everyDanger.add(danger);
