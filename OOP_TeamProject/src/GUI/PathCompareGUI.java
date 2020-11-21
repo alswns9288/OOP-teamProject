@@ -12,18 +12,19 @@ import manager.*;
 
 
 import java.awt.event.*;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class PathCompareGUI extends JPanel {
-	PeopleManagement manage = new PeopleManagement();
-	UserManager uManage = new UserManager();
+	PeopleManagement pmanage = PeopleManagement.getInstance();
+	UserManager uManage = UserManager.getInstance();
 	int dangerRate = 1;
-	String myDay = null;
+	LocalDate myDay = null;
 	String myName = null;
 	String myCity = "Yountonggu";
 	ArrayList<String> myPlace = new ArrayList<String>();
-	ArrayList<String> myTime = new ArrayList<String>();
+	ArrayList<LocalTime> myTime = new ArrayList<LocalTime>();
 	ArrayList<Integer> everyDanger = new ArrayList<Integer>();
 	
 	public PathCompareGUI() {
@@ -64,7 +65,7 @@ public class PathCompareGUI extends JPanel {
 	
 	private void setMys() {
 		int NumOfMyPath = uManage.userList.size();
-		myDay = uManage.userList.get(0).date;
+		myDay = FirstGUI.getDate();
 		for (int i = 0; i<NumOfMyPath; i++) {
 			split(uManage.userList.get(i).information);
 		}
@@ -75,7 +76,7 @@ public class PathCompareGUI extends JPanel {
 		for (String string : information) {
 			temp = string.split("/");
 			myPlace.add(temp[0]);
-			myTime.add(temp[1]);
+			myTime.add(LocalTime.parse(temp[1]));
 		}
 	}
 
@@ -86,13 +87,13 @@ public class PathCompareGUI extends JPanel {
 		contents[0][0] = myCity;
 		contents[0][1] = myName;
 		contents[0][2] = myPlace.get(0);
-		contents[0][2] = myTime.get(0);
+		contents[0][2] = myTime.get(0)+"";
 		int i = 1;
 		while(i<myPlace.size()) {
 			contents[i][0] = null;
 			contents[i][1] = null;
 			contents[i][2] = myPlace.get(i);
-			contents[i][3] = myTime.get(i);
+			contents[i][3] = myTime.get(i)+"";
 			i++;
 		}
 		
@@ -105,22 +106,31 @@ public class PathCompareGUI extends JPanel {
 	private void setPositivesPath() {
 		String header[] = {"City", "Danger Rate", "Place", "Time"};
 		String contents[][] = null;
-		contents[0][0] = myCity;
 		//contents 데이터 구축
+		for(int i = 0; i<myPlace.size(); i++) {
+			contents[i][0] = null;
+			contents[i][1] = computeDangerRate(i)+"";
+			if(pmanage.search(myPlace.get(i))) {
+				contents[i][2] = myPlace.get(i);
+				contents[i][3] = myTime.get(i)+"";
+			}
+		}
+		contents[0][0] = myCity;
 		
 		JTable myTable = new JTable(contents, header);
 		JScrollPane jscrollPane = new JScrollPane(myTable);
 		jscrollPane.setPreferredSize(new Dimension(400, 300));
+		// 위험도 별로 색깔 다르게 하기
 		add(jscrollPane, BorderLayout.PAGE_END);
 	}
 	
 	private int computeDangerRate(int num) {
 		int danger = 1;
-		if (manage.search(myPlace.get(num))) {
+		if (pmanage.search(myPlace.get(num))) {
 			danger++;
-			if(/*확진자 이후에 방문*/) {
+			if(/*앞에서 검색한!! 확진자 이전에 방문*/) {
 				danger++;
-				if(/*확진자와 와벽히 겹침*/) {
+				if(/*앞에서 검색한!! 확진자와 완벽히 겹침*/) {
 					danger += 2;
 				}
 			}

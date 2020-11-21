@@ -19,7 +19,7 @@ public class Person implements Manageable {
 		}
 		for (int i = 0; i < pathList.size(); i++) {
 			String path = pathList.get(i) + "/" + timeList.get(i);
-			if (keyword.contentEquals(path)) {
+			if (path.contains(keyword)) {
 				return true;
 			}
 		}
