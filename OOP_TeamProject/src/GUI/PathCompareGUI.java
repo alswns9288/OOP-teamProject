@@ -104,16 +104,20 @@ public class PathCompareGUI extends JPanel {
 	}
 
 	private void setPositivesPath() {
+		int size = 0;
 		String header[] = {"City", "Danger Rate", "Place", "Time"};
-		String contents[][] = null;
+		String contents[][] = new String[size][size]; //일별확진자의 수를 구하기
 		//contents 데이터 구축
 		for(int i = 0; i<myPlace.size(); i++) {
 			contents[i][0] = null;
 			contents[i][1] = computeDangerRate(i)+"";
-			ArrayList<String> ptemp = null;
 			if(pmanage.search(myPlace.get(i))) {
-				contents[i][2] = null;//확진자의 위치
-				contents[i][3] = null;//확진자의 시간
+				int j = 0;
+				for(String s: pmanage.matchPath(myPlace.get(i)))
+					if (j%2==0) 
+						contents[i][2] = s;
+					else
+						contents[i][3] = s;
 			}
 		}
 		contents[0][0] = myCity;

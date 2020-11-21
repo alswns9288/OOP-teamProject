@@ -25,6 +25,27 @@ public class Person implements Manageable {
 		}
 		return false;
 	}
+	
+	public String[] searchOnePath(String keyword){
+		String[] pathArray = new String[2];
+		for (int i = 0; i < pathList.size(); i++) {
+			String path = pathList.get(i) + "/" + timeList.get(i);
+			if (path.contains(keyword)) {
+				pathArray[0] = pathList.get(i);
+				pathArray[1] = timeList.get(i) + "";
+			}
+		}
+		return pathArray;
+	}
+	
+	public String toString() {
+		String toStr = null;
+		toStr = number + "-"+ date;
+		for (int i = 0; i < pathList.size()-1; i++) {
+			toStr += "-" + pathList.get(i) + "/" + timeList.get(i);
+		}
+		return toString(); // format : 1-11/1-path1/time1-path2/time2...
+	}
 
 	@Override
 	public void readFile(Scanner scanFile) {

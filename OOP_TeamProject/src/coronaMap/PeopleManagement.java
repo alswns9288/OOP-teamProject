@@ -1,5 +1,7 @@
 package coronaMap;
 
+import java.util.ArrayList;
+
 import manager.*;
 
 public class PeopleManagement extends Manager implements Factory {
@@ -51,5 +53,37 @@ public class PeopleManagement extends Manager implements Factory {
 			}
 		}
 		return result;
+	}
+	
+	public ArrayList<Integer> NumOfPotives(String keyword){
+		ArrayList<Integer> numbers = null;
+		for (int i = 0; i<objectList.size(); i++) {
+			Person m = (Person) objectList.get(i);
+			if(m.matches(keyword))
+				numbers.add(m.number);
+		}
+		return numbers;
+	}
+	
+	public ArrayList<String> InfoOfPotives(String keyword){
+		ArrayList<String> info = null;
+		for (int i = 0; i<objectList.size(); i++) {
+			Person m = (Person) objectList.get(i);
+			if(m.matches(keyword))
+				info.add(m.toString());
+		}
+		return info;
+	}
+	
+	public ArrayList<String> matchPath(String keyword){
+		ArrayList<String> matchPathList = null;
+		for (int i = 0; i<objectList.size(); i++) {
+			Person m = (Person) objectList.get(i);
+			if(m.matches(keyword)) {
+				matchPathList.add(m.searchOnePath(keyword)[0]);
+				matchPathList.add(m.searchOnePath(keyword)[1]);	
+			}
+		}
+		return matchPathList;
 	}
 }
