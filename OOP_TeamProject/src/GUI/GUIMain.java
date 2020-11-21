@@ -3,7 +3,7 @@ package GUI;
 import javax.swing.*;
 
 import coronaMap.CoronaMapMain;
-import manager.UserManager;
+import Manager.UserManager;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -76,6 +76,14 @@ public class GUIMain extends JFrame {
 			setDefaultGUI(this);
 			getContentPane().add(LoginGUI);
 		}
+		if (menuName.contains("로그아웃")) {
+			UserManager userManager = UserManager.getInstance();
+			userManager.login(null);
+			getContentPane().removeAll();
+			date = FirstGUI.getDate();
+			setDefaultGUI(this);
+			getContentPane().add(LoginGUI);
+		}
 		revalidate();
 		repaint();
 	}
@@ -110,7 +118,7 @@ public class GUIMain extends JFrame {
 		if (userID == null) {
 			signIn = new JButton("로그인");
 		} else {
-			signIn = new JButton(userID);
+			signIn = new JButton("로그아웃");
 		}
 		signIn.setSize(50, 100);
 		hideJButton(menu, signIn);
@@ -149,9 +157,16 @@ public class GUIMain extends JFrame {
 				search2.setBackground(Color.LIGHT_GRAY);
 			}
 			if (e.getSource() == signIn) {
-				changeGUI("로그인");
-				signIn.setBackground(Color.LIGHT_GRAY);
-			}
+				String s = signIn.getText();
+				if(s.contentEquals("로그인")) {
+					changeGUI("로그인");
+					signIn.setBackground(Color.LIGHT_GRAY);
+				}
+				else if(s.contentEquals("로그아웃")) {
+					changeGUI("로그아웃");
+					signIn.setBackground(Color.LIGHT_GRAY);
+				}
+			}	
 		}
 	}
 }
