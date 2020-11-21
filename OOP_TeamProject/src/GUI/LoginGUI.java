@@ -4,7 +4,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 import coronaMap.CoronaMapMain;
-import manager.UserManager;
+import Manager.UserManager;
 
 public class LoginGUI extends JPanel {
 	UserManager userManager = UserManager.getInstance();
@@ -12,7 +12,8 @@ public class LoginGUI extends JPanel {
 	JButton signUpButton;
 	JButton loginButton;
 	JTextField Username;
-
+	JTextField Password;
+	
 	public LoginGUI() {
 		setLayout(null);
 		createLabel();
@@ -31,6 +32,7 @@ public class LoginGUI extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				userManager.login(Username.getText());
 				Username.setText("");
+				Password.setText("");
 				JOptionPane.showMessageDialog(null, "로그인 되었습니다.");
 			}
 		});
@@ -42,7 +44,7 @@ public class LoginGUI extends JPanel {
 		Username.setSize(150, 30);
 		add(Username);
 	
-		JTextField Password = new JTextField();
+		Password = new JTextField();
 		Password.setLocation(150, 105);
 		Password.setSize(150, 30);
 		add(Password);	
