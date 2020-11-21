@@ -83,6 +83,7 @@ public class GUIMain extends JFrame {
 			date = FirstGUI.getDate();
 			setDefaultGUI(this);
 			getContentPane().add(LoginGUI);
+			JOptionPane.showMessageDialog(null, "로그아웃 되었습니다.");
 		}
 		revalidate();
 		repaint();
