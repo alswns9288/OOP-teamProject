@@ -3,7 +3,7 @@ package GUI;
 import javax.swing.*;
 
 import coronaMap.CoronaMapMain;
-import Manager.UserManager;
+import manager.UserManager;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -78,7 +78,7 @@ public class GUIMain extends JFrame {
 		}
 		if (menuName.contains("로그아웃")) {
 			UserManager userManager = UserManager.getInstance();
-			userManager.login(null);
+			userManager.setID(null);
 			getContentPane().removeAll();
 			date = FirstGUI.getDate();
 			setDefaultGUI(this);

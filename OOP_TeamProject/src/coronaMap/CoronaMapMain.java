@@ -17,6 +17,9 @@ public class CoronaMapMain {
 		PeopleManagement peopleManagement = PeopleManagement.getInstance();
 		peopleManagement.run("PersonPath.txt");
 		
+		UserManager userManager = UserManager.getInstance();
+		userManager.readMembers("MemberList.txt");
+		
 		GUIMain start = new GUIMain();
 		start.createAndShowGUI();
 	}

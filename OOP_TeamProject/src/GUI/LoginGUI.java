@@ -1,10 +1,11 @@
 package GUI;
 
 import java.awt.event.*;
+
 import javax.swing.*;
 
 import coronaMap.CoronaMapMain;
-import Manager.UserManager;
+import manager.UserManager;
 
 public class LoginGUI extends JPanel {
 	UserManager userManager = UserManager.getInstance();
@@ -30,10 +31,18 @@ public class LoginGUI extends JPanel {
 		loginButton.addActionListener(new ActionListener() {		
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				userManager.login(Username.getText());
+				boolean state = false;
+				
+				state = userManager.login(Username.getText());
 				Username.setText("");
 				Password.setText("");
-				JOptionPane.showMessageDialog(null, "로그인 되었습니다.");
+				if (state) {
+					JOptionPane.showMessageDialog(null, "로그인 되었습니다");
+					userManager.readMembers();
+					return;
+				}
+				JOptionPane.showMessageDialog(null, "로그인 실패!");
+				userManager.setID(null);
 			}
 		});
 	}
