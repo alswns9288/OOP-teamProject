@@ -40,4 +40,12 @@ public class User implements Split {
 	public ArrayList<String> getPathAndTime() {
 		return pathAndTime;
 	}
+
+	public void print() {
+		System.out.print(date + " ");
+		for (String s: pathAndTime) {
+			System.out.print(s + " -> ");
+		}
+		System.out.println();
+	}
 }

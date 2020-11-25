@@ -86,6 +86,9 @@ public class UserManager {
 	public void readMemberPath() {
 		Member member = null;
 		userList.clear();
+		if (userID == null) {
+			return;
+		}
 		for (Member m: memberList) {
 			if (m.name.contentEquals(userID)) {
 				member = m;
@@ -137,6 +140,12 @@ public class UserManager {
 		pathAndTime = user.getPathAndTime();
 		
 		return pathAndTime;
+	}
+
+	public void print() {
+		for (User u: userList) {
+			u.print();
+		}
 	}
 
 }
