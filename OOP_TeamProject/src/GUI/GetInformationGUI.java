@@ -5,6 +5,9 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Formatter;
 
 import coronaMap.*;
 import manager.UserManager;
@@ -21,15 +24,24 @@ public class GetInformationGUI extends JPanel {
 	JTable table;
 	String time, place;
 	String city = "ΏµΕλ±Έ";
-	LocalDate date;
+	LocalDate date = FirstGUI.getDate();;
 	User user;
 	
 	public GetInformationGUI() {
 		setLayout(new BorderLayout());
 		setUserArea();
 		setShowArea();
+		showRegisteredData();
 		addActionListener(addButton);
 		addActionListener(searchButton);
+	}
+
+	private void showRegisteredData() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd");
+		UserManager userManager = UserManager.getInstance();
+		ArrayList<String> path = userManager.getPath(date.format(formatter));
+		
+		
 	}
 
 	private void setShowArea() {
@@ -71,8 +83,7 @@ public class GetInformationGUI extends JPanel {
 
 	public void addUserPath() {	
 		PlaceManagement placeManagement = PlaceManagement.getInstance();
-		UserManager userManager = UserManager.getInstance();
-		date = FirstGUI.getDate();
+		UserManager userManager = UserManager.getInstance(); 
 		time = timeField.getText();
 		place = placeField.getText();
 		
@@ -116,7 +127,11 @@ public class GetInformationGUI extends JPanel {
 				addUserPath();
 			}
 			if (button.getText().contentEquals("search")) {
-				
+				removeAll();
+				PrintpplGUI compare = new PrintpplGUI();
+				add(compare);
+				revalidate();
+				repaint();
 			}
 		}
 	}

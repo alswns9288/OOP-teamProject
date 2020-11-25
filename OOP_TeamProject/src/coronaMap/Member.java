@@ -1,13 +1,15 @@
 package coronaMap;
 
 import java.io.*;
+
 import java.time.LocalTime;
 import java.util.*;
+import java.util.Map.Entry;
+
 import manager.*;
 
 public class Member {
-	public ArrayList<String> information = new ArrayList<>();
-	public ArrayList<String> date = new ArrayList<>();
+	public HashMap<String, String> pathByDate = new HashMap<>();
 	public String name;
 	
 	public Member(String userID) {
@@ -18,17 +20,18 @@ public class Member {
 		Scanner scanFile = openFile(fileName);
 		
 		while (scanFile.hasNext()) {
-			String tmp = null;
+			String tmpDate = null;
+			String tmpPath = null;
 			
-			date.add(scanFile.next());
-			tmp = (scanFile.nextLine()).trim();
-			information.add(tmp);
+			tmpDate = scanFile.next();
+			tmpPath = (scanFile.nextLine()).trim();
+			
+			pathByDate.put(tmpDate, tmpPath);		
 		}
 		scanFile.close();
 		
-		for (int i = 0; i < date.size(); i++) {
-			System.out.print(date.get(i) + " ");
-			System.out.println(information.get(i));
+		for (Entry<String, String> entry: pathByDate.entrySet()) {
+			System.out.println(entry.getKey() + " " + entry.getValue());
 		}
 	}
 	
@@ -42,5 +45,9 @@ public class Member {
 			System.exit(0);
 		}
 		return scanFile;
+	}
+	
+	public HashMap<String, String> getPathByDate(String key) {
+		return pathByDate;
 	}
 }

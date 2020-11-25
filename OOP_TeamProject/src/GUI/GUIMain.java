@@ -35,9 +35,7 @@ public class GUIMain extends JFrame {
 
 		container.firstGUI = new FirstGUI();
 		container.printpplGUI = new PrintpplGUI();
-//		container.pathCompareGUI = new PathCompareGUI();
 		container.LoginGUI = new LoginGUI();
-		container.getInformationGUI = new GetInformationGUI();
 
 		container.add(container.firstGUI);
 
@@ -65,6 +63,7 @@ public class GUIMain extends JFrame {
 			getContentPane().add(printpplGUI);
 		}
 		if (menuName.contains("경로비교")) {
+			getInformationGUI = new GetInformationGUI();
 			getContentPane().removeAll();
 			date = FirstGUI.getDate();
 			setDefaultGUI(this);
@@ -129,7 +128,6 @@ public class GUIMain extends JFrame {
 
 	private void hideJButton(JPanel panel, JButton button) {
 		button.setBorderPainted(false);
-		// button.setContentAreaFilled(false);
 		button.setBackground(Color.WHITE);
 		button.setFocusPainted(false);
 		panel.add(button);
@@ -144,7 +142,6 @@ public class GUIMain extends JFrame {
 	class MyActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// JButton button = (JButton) e.getSource();
 			if (e.getSource() == main) {
 				changeGUI("main");
 				main.setBackground(Color.LIGHT_GRAY);

@@ -38,7 +38,7 @@ public class LoginGUI extends JPanel {
 				Password.setText("");
 				if (state) {
 					JOptionPane.showMessageDialog(null, "로그인 되었습니다");
-					userManager.readMembers();
+					userManager.readMemberPath();
 					return;
 				}
 				JOptionPane.showMessageDialog(null, "로그인 실패!");

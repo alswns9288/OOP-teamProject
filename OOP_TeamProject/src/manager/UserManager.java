@@ -3,8 +3,10 @@ package manager;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
-
+import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.Map.Entry;
+
 import coronaMap.User;
 import coronaMap.Member;
 
@@ -80,11 +82,45 @@ public class UserManager {
 		return scanFile;
 	}
 
-	public void readMembers() {
-		for (Member member: memberList) {
-			if (member.name.contentEquals(userID)) {
+	public void readMemberPath() {
+		Member member = null;
+		for (Member m: memberList) {
+			if (m.name.contentEquals(userID)) {
+				member = m;
 				member.readFile(userID + ".txt");
+				break;
+			}
+		}
+		setUser(member);
+	}
+
+	private void setUser(Member member) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd");
+		HashMap<String, String> tmp = new HashMap<>();
+		User user = null;
+		String tmpDate = null;
+		LocalDate date = null;
+		
+		userList.clear(); // 로그아웃했다가 다시 로그인하면 정보 비우기
+		
+		
+		for (Entry<String, String> entry: tmp.entrySet()) {
+			date = LocalDate.parse(entry.getKey(), formatter);
+			
+			if (fineUser(date) == null) {
+				user = new User(date);
+				user.addInformation(entry.getValue());
+				addList(user);
+			} else {
+				user = fineUser(date);
+				user.addInformation(entry.getValue());
 			}
 		}
 	}
+	
+	public ArrayList<String> getPath(String Date) {
+		
+		return null;
+	}
+
 }
