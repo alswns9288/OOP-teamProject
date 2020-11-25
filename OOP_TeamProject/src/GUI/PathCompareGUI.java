@@ -104,26 +104,27 @@ public class PathCompareGUI extends JPanel {
 	}
 
 	private void setPositivesPath() {
-		int size = 0;
 		String header[] = {"City", "Danger Rate", "Place", "Time"};
-		String contents[][] = new String[size][size]; //일별확진자의 수를 구하기
-		//contents 데이터 구축
+		String contents[][] = {{myCity, null, null, null}};
+		DefaultTableModel myTable = new DefaultTableModel(contents, header);
+		
 		for(int i = 0; i<myPlace.size(); i++) {
-			contents[i][0] = null;
-			contents[i][1] = computeDangerRate(i)+"";
+			contents[0][0] = null;
 			if(pmanage.search(myPlace.get(i))) {
+				contents[0][1] = computeDangerRate(i)+"";
 				int j = 0;
-				for(String s: pmanage.matchPath(myPlace.get(i)))
+				for(String s: pmanage.matchPath(myPlace.get(i))) {
 					if (j%2==0) 
-						contents[i][2] = s;
+						contents[0][2] = s;
 					else
-						contents[i][3] = s;
+						contents[0][3] = s;
+					myTable.addRow(contents);
+				}
 			}
 		}
-		contents[0][0] = myCity;
 		
-		JTable myTable = new JTable(contents, header);
-		JScrollPane jscrollPane = new JScrollPane(myTable);
+		JTable shownTable = new JTable(myTable);
+		JScrollPane jscrollPane = new JScrollPane(shownTable);
 		jscrollPane.setPreferredSize(new Dimension(400, 300));
 		// 위험도 별로 색깔 다르게 하기
 		add(jscrollPane, BorderLayout.PAGE_END);
