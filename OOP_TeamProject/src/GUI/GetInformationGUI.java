@@ -4,17 +4,15 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
-import java.time.LocalDate;
-import java.time.LocalTime;
+
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Formatter;
 
 import coronaMap.*;
-import manager.Split;
-import manager.UserManager;
+import manager.*;
 
 public class GetInformationGUI extends JPanel implements Split {
+	UserManager userManager = UserManager.getInstance();
 	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd");
 	JPanel inner = new JPanel();
 	JTextField placeField = new JTextField();
@@ -30,24 +28,25 @@ public class GetInformationGUI extends JPanel implements Split {
 	User user;
 
 	public GetInformationGUI() {
-		UserManager userManager = UserManager.getInstance();
 
 		setLayout(new BorderLayout());
 		setUserArea();
 		setShowArea();
-		showRegisteredData();
-		addActionListener(addButton);
-		addActionListener(searchButton);
+		if (userManager.getID() != null) {
+			showRegisteredData();
+		}
+		addActionListener(addButton,searchButton);
 	}
 
 	private void showRegisteredData() {
-		UserManager userManager = UserManager.getInstance();
+		model = (DefaultTableModel) table.getModel();
+		model.setNumRows(0);
 
 		ArrayList<String> pathAndTime = userManager.getPath(date);
 		if (pathAndTime == null) {
 			return;
 		}
-		System.out.println(date);
+
 		setMemberPath(pathAndTime);
 	}
 
@@ -66,8 +65,6 @@ public class GetInformationGUI extends JPanel implements Split {
 	}
 
 	private void setMemberPath(ArrayList<String> pathAndTime) {
-		model = (DefaultTableModel) table.getModel();
-		System.out.println("3");
 
 		for (String information : pathAndTime) {
 			System.out.println(information);
@@ -116,7 +113,6 @@ public class GetInformationGUI extends JPanel implements Split {
 
 	public void addUserPath() {
 		PlaceManagement placeManagement = PlaceManagement.getInstance();
-		UserManager userManager = UserManager.getInstance();
 		time = timeField.getText();
 		place = placeField.getText();
 
@@ -161,8 +157,8 @@ public class GetInformationGUI extends JPanel implements Split {
 			}
 			if (button.getText().contentEquals("search")) {
 				removeAll();
-				PrintpplGUI compare = new PrintpplGUI();
-				add(compare);
+				userManager.print();
+				
 				revalidate();
 				repaint();
 			}

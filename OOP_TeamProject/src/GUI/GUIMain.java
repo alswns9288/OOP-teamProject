@@ -51,6 +51,8 @@ public class GUIMain extends JFrame {
 	}
 
 	public void changeGUI(String menuName) {
+		UserManager userManager = UserManager.getInstance();
+		
 		if (menuName.contains("main")) {
 			getContentPane().removeAll();
 			setDefaultGUI(this);
@@ -64,6 +66,7 @@ public class GUIMain extends JFrame {
 		}
 		if (menuName.contains("경로비교")) {
 			getInformationGUI = new GetInformationGUI();
+			userManager.readMemberPath();
 			getContentPane().removeAll();
 			date = FirstGUI.getDate();
 			setDefaultGUI(this);
@@ -76,7 +79,7 @@ public class GUIMain extends JFrame {
 			getContentPane().add(LoginGUI);
 		}
 		if (menuName.contains("로그아웃")) {
-			UserManager userManager = UserManager.getInstance();
+			userManager.userList.clear(); // 로그아웃했다가 다시 로그인하면 정보 비우기
 			userManager.setID(null);
 			getContentPane().removeAll();
 			date = FirstGUI.getDate();
