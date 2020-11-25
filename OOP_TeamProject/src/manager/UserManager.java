@@ -85,6 +85,7 @@ public class UserManager {
 
 	public void readMemberPath() {
 		Member member = null;
+		userList.clear();
 		for (Member m: memberList) {
 			if (m.name.contentEquals(userID)) {
 				member = m;
@@ -95,7 +96,7 @@ public class UserManager {
 		setUser(member);
 	}
 
-	private void setUser(Member member) {
+	public void setUser(Member member) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd");
 		HashMap<String, String> tmp = member.getPathByDate(FirstGUI.getDate().format(formatter));
 		User user = null;
@@ -105,11 +106,7 @@ public class UserManager {
 			return;
 		}
 		
-		userList.clear(); // 로그아웃했다가 다시 로그인하면 정보 비우기
-		
-		
 		for (Entry<String, String> entry: tmp.entrySet()) {
-			System.out.println(entry.getKey());
 			date = entry.getKey();
 			
 			if (fineUser(date) == null) {
@@ -121,18 +118,23 @@ public class UserManager {
 				user.addInformation(entry.getValue());
 			}
 		}
+		for (User u: userList) {
+			System.out.println(u.date);
+		}
 	}
 	
 	public ArrayList<String> getPath(String date) {
 		ArrayList<String> pathAndTime = new ArrayList<>();
-		
+		readMemberPath();
 		User user = fineUser(date);
 		if (user == null) {
+			System.out.println();
+			System.out.println();
+			System.out.println("null");
 			return null;
 		}
 		
 		pathAndTime = user.getPathAndTime();
-		System.out.println("getPath" + 5);
 		
 		return pathAndTime;
 	}

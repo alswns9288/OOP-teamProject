@@ -30,8 +30,6 @@ public class GetInformationGUI extends JPanel implements Split {
 	User user;
 
 	public GetInformationGUI() {
-		UserManager userManager = UserManager.getInstance();
-
 		setLayout(new BorderLayout());
 		setUserArea();
 		setShowArea();
@@ -41,13 +39,15 @@ public class GetInformationGUI extends JPanel implements Split {
 	}
 
 	private void showRegisteredData() {
+		model = (DefaultTableModel) table.getModel();
 		UserManager userManager = UserManager.getInstance();
+		model.setNumRows(0);
 
 		ArrayList<String> pathAndTime = userManager.getPath(date);
 		if (pathAndTime == null) {
 			return;
 		}
-		System.out.println(date);
+		
 		setMemberPath(pathAndTime);
 	}
 
@@ -66,8 +66,6 @@ public class GetInformationGUI extends JPanel implements Split {
 	}
 
 	private void setMemberPath(ArrayList<String> pathAndTime) {
-		model = (DefaultTableModel) table.getModel();
-		System.out.println("3");
 
 		for (String information : pathAndTime) {
 			System.out.println(information);

@@ -44,12 +44,12 @@ public class Member {
 	}
 	
 	public HashMap<String, String> getPathByDate(String key) {
-		
 		for (Entry<String, String> entry: pathByDate.entrySet()) {
 			if (entry.getKey().contentEquals(key)) {
 				return pathByDate;
 			}
 		}
+		System.out.println("null: Member getPathByDate");
 		return null;
 	}
 }

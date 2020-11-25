@@ -38,13 +38,6 @@ public class User implements Split {
 	}
 	
 	public ArrayList<String> getPathAndTime() {
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println("in getPathAndTime");
 		return pathAndTime;
 	}
 }
