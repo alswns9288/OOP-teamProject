@@ -5,15 +5,17 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Formatter;
 
 import coronaMap.*;
+import manager.Split;
 import manager.UserManager;
 
-
-public class GetInformationGUI extends JPanel {
+public class GetInformationGUI extends JPanel implements Split {
+	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd");
 	JPanel inner = new JPanel();
 	JTextField placeField = new JTextField();
 	JTextField timeField = new JTextField();
@@ -24,10 +26,12 @@ public class GetInformationGUI extends JPanel {
 	JTable table;
 	String time, place;
 	String city = "영통구";
-	LocalDate date = FirstGUI.getDate();;
+	String date = FirstGUI.getDate().format(formatter);
 	User user;
-	
+
 	public GetInformationGUI() {
+		UserManager userManager = UserManager.getInstance();
+
 		setLayout(new BorderLayout());
 		setUserArea();
 		setShowArea();
@@ -37,21 +41,49 @@ public class GetInformationGUI extends JPanel {
 	}
 
 	private void showRegisteredData() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd");
 		UserManager userManager = UserManager.getInstance();
-		ArrayList<String> path = userManager.getPath(date.format(formatter));
-		
-		
+
+		ArrayList<String> pathAndTime = userManager.getPath(date);
+		if (pathAndTime == null) {
+			return;
+		}
+		System.out.println(date);
+		setMemberPath(pathAndTime);
+	}
+
+	public void split(String information) {
+		String[] registerdArray = null;
+		String[] temp = null;
+
+		registerdArray = information.split("-");
+		for (String string : registerdArray) {
+			temp = string.split("/");
+			place = temp[0];
+			time = temp[1]; // x:xx로 나타낸 시간을 time format으로 변경
+			Object[] row = { city, place, time };
+			model.addRow(row);
+		}
+	}
+
+	private void setMemberPath(ArrayList<String> pathAndTime) {
+		model = (DefaultTableModel) table.getModel();
+		System.out.println("3");
+
+		for (String information : pathAndTime) {
+			System.out.println(information);
+			model = (DefaultTableModel) table.getModel();
+			split(information);
+		}
 	}
 
 	private void setShowArea() {
-		String header[] = {"City", "Place", "Time"};
+		String header[] = { "City", "Place", "Time" };
 		String contents[][] = {};
-		
+
 		model = new DefaultTableModel(contents, header);
 		table = new JTable(model);
 		JScrollPane jscrollPane = new JScrollPane(table);
-		
+
 		jscrollPane.setPreferredSize(new Dimension(400, 500));
 		add(jscrollPane, BorderLayout.CENTER);
 	}
@@ -59,9 +91,9 @@ public class GetInformationGUI extends JPanel {
 	private void setUserArea() {
 		inner.setPreferredSize(new Dimension(400, 80));
 		addButton.setPreferredSize(new Dimension(80, 30));
-		
+
 		setSizeAndAdd(cityField, placeField, timeField);
-		
+
 		inner.add(addButton);
 		searchButton.setPreferredSize(new Dimension(80, 30));
 		inner.add(searchButton);
@@ -69,30 +101,31 @@ public class GetInformationGUI extends JPanel {
 
 	private void setSizeAndAdd(JComponent... objects) {
 		for (int i = 0; i < objects.length; i++) {
-			objects[i].setPreferredSize(new Dimension(120, 30));;
+			objects[i].setPreferredSize(new Dimension(120, 30));
+			;
 			inner.add(objects[i]);
-		}	
+		}
 		add(inner, BorderLayout.NORTH);
 	}
-	
+
 	private void addActionListener(JButton... buttons) {
 		for (int i = 0; i < buttons.length; i++) {
 			buttons[i].addActionListener(new MyActionListener());
 		}
 	}
 
-	public void addUserPath() {	
+	public void addUserPath() {
 		PlaceManagement placeManagement = PlaceManagement.getInstance();
-		UserManager userManager = UserManager.getInstance(); 
+		UserManager userManager = UserManager.getInstance();
 		time = timeField.getText();
 		place = placeField.getText();
-		
+
 		if (!placeManagement.search(place)) {
 			JOptionPane.showMessageDialog(null, "Unregistered place! " + place);
 			clearTextField();
 			return;
 		}
-		
+
 		if (userManager.fineUser(date) == null) {
 			user = new User(date);
 			user.addInformation(placeField.getText(), timeField.getText());
@@ -101,13 +134,13 @@ public class GetInformationGUI extends JPanel {
 			user = userManager.fineUser(date);
 			user.addInformation(placeField.getText(), timeField.getText());
 		}
-		
+
 		clearTextField();
 		addTableRow();
 	}
 
 	private void addTableRow() {
-		model = (DefaultTableModel)table.getModel();
+		model = (DefaultTableModel) table.getModel();
 		Object[] row = { city, place, time };
 		model.addRow(row);
 	}
@@ -122,7 +155,7 @@ public class GetInformationGUI extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			JButton button = (JButton) e.getSource();
-			
+
 			if (button.getText().contentEquals("add")) {
 				addUserPath();
 			}
@@ -136,5 +169,3 @@ public class GetInformationGUI extends JPanel {
 		}
 	}
 }
-	
-

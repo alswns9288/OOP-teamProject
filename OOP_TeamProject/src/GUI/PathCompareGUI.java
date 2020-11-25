@@ -67,7 +67,7 @@ public class PathCompareGUI extends JPanel {
 		int NumOfMyPath = uManage.userList.size();
 		myDay = FirstGUI.getDate();
 		for (int i = 0; i<NumOfMyPath; i++) {
-			split(uManage.userList.get(i).information);
+			split(uManage.userList.get(i).pathAndTime);
 		}
 	}
 

@@ -1,16 +1,21 @@
 package coronaMap;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import manager.Split;
 
 public class User implements Split {
 	public ArrayList<String> pathAndTime = new ArrayList<>();
-	public LocalDate date;
+	public String date;
 	
 	public User(LocalDate date) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd");
+		this.date = date.format(formatter);
+	}
+	
+	public User(String date) {
 		this.date = date;
 	}
 	
@@ -30,5 +35,16 @@ public class User implements Split {
 		for (String string : registerdArray) {
 			pathAndTime.add(string);
 		}
+	}
+	
+	public ArrayList<String> getPathAndTime() {
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println("in getPathAndTime");
+		return pathAndTime;
 	}
 }

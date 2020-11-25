@@ -29,10 +29,6 @@ public class Member {
 			pathByDate.put(tmpDate, tmpPath);		
 		}
 		scanFile.close();
-		
-		for (Entry<String, String> entry: pathByDate.entrySet()) {
-			System.out.println(entry.getKey() + " " + entry.getValue());
-		}
 	}
 	
 	private Scanner openFile(String fileName) {
@@ -48,6 +44,12 @@ public class Member {
 	}
 	
 	public HashMap<String, String> getPathByDate(String key) {
-		return pathByDate;
+		
+		for (Entry<String, String> entry: pathByDate.entrySet()) {
+			if (entry.getKey().contentEquals(key)) {
+				return pathByDate;
+			}
+		}
+		return null;
 	}
 }

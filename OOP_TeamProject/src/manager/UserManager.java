@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.Map.Entry;
 
+import GUI.FirstGUI;
 import coronaMap.User;
 import coronaMap.Member;
 
@@ -47,9 +48,9 @@ public class UserManager {
 		userList.add(user);
 	}
 	
-	public User fineUser(LocalDate date) {
+	public User fineUser(String date) {
 		for (User user: userList) {
-			if (date.toString().contentEquals(user.date.toString())) {
+			if (date.contentEquals(user.date)) {
 				return user;
 			}
 		}
@@ -96,16 +97,20 @@ public class UserManager {
 
 	private void setUser(Member member) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd");
-		HashMap<String, String> tmp = new HashMap<>();
+		HashMap<String, String> tmp = member.getPathByDate(FirstGUI.getDate().format(formatter));
 		User user = null;
-		String tmpDate = null;
-		LocalDate date = null;
+		String date = null;
+		
+		if (tmp == null) {
+			return;
+		}
 		
 		userList.clear(); // 로그아웃했다가 다시 로그인하면 정보 비우기
 		
 		
 		for (Entry<String, String> entry: tmp.entrySet()) {
-			date = LocalDate.parse(entry.getKey(), formatter);
+			System.out.println(entry.getKey());
+			date = entry.getKey();
 			
 			if (fineUser(date) == null) {
 				user = new User(date);
@@ -118,9 +123,18 @@ public class UserManager {
 		}
 	}
 	
-	public ArrayList<String> getPath(String Date) {
+	public ArrayList<String> getPath(String date) {
+		ArrayList<String> pathAndTime = new ArrayList<>();
 		
-		return null;
+		User user = fineUser(date);
+		if (user == null) {
+			return null;
+		}
+		
+		pathAndTime = user.getPathAndTime();
+		System.out.println("getPath" + 5);
+		
+		return pathAndTime;
 	}
 
 }

@@ -5,8 +5,9 @@ import java.time.LocalTime;
 import java.util.*;
 
 import manager.Manageable;
+import manager.Split;
 
-public class Person implements Manageable {
+public class Person implements Manageable, Split {
 	public ArrayList<String> pathList = new ArrayList<>();
 	public ArrayList<LocalTime> timeList = new ArrayList<>();
 	public String date;
@@ -71,7 +72,7 @@ public class Person implements Manageable {
 		System.out.println();
 	}
 
-	private void split(String information) {
+	public void split(String information) {
 		String[] registerdArray = null;
 		String[] temp = null;
 
