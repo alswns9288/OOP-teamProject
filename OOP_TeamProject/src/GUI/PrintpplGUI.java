@@ -19,29 +19,27 @@ import static GUI.FirstGUI.date;
 
 public class PrintpplGUI extends JPanel {
 	PeopleManagement pmanage = PeopleManagement.getInstance();
-    public ArrayList<String> path = new ArrayList<>();
+	public ArrayList<String> path = new ArrayList<>();
 	public ArrayList<LocalTime> time = new ArrayList<>();
-    ArrayList<String> data = new ArrayList<String>();
-    int num = pmanage.searchNumber(date.format(DateTimeFormatter.ofPattern("M/d")));;
+	ArrayList<String> data = new ArrayList<String>();
+	int num = pmanage.searchNumber(date.format(DateTimeFormatter.ofPattern("M/d")));;
+
 	public PrintpplGUI() {
 		setTable();
 	}
-  
 
-	private void setTable() { // 1 í™”í¬ì‹ë‹¹ ì˜í†µì /12:20-ê²½ê¸°ëŒ€/13:30
-		String header[] = { "í™•ì§„ì", "ìœ„ì¹˜/ì‹œê°„"};
+	private void setTable() { // 1 È­Æ÷½Ä´ç ¿µÅëÁ¡/12:20-°æ±â´ë/13:30
+		String header[] = { "È®ÁøÀÚ", "À§Ä¡/½Ã°£" };
 		String contents[][] = new String[num][2];
 		DefaultTableModel myTable = new DefaultTableModel(contents, header);
-		
-		for (Manageable m: pmanage.objectList) {
-		      Person p = (Person)m;
-		      path=p.pathList;
-		      time=p.timeList;
-		    
-		     
-		      
+
+		for (Manageable m : pmanage.objectList) {
+			Person p = (Person) m;
+			path = p.pathList;
+			time = p.timeList;
+
 		}
-		
+
 		JTable shownTable = new JTable(myTable);
 		JScrollPane jscrollPane = new JScrollPane(shownTable);
 		jscrollPane.setPreferredSize(new Dimension(370, 480));
