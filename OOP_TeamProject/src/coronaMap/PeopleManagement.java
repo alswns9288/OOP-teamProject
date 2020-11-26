@@ -19,11 +19,6 @@ public class PeopleManagement extends Manager implements Factory {
 	
 	public void run(String fileName) {
 		readAll(fileName);
-//		printAll();
-//		search();
-//		addInformation(fileName, this);
-//		readAll(fileName);
-//		printAll();
 	}
 	
 	public void readAll(String fileName) {
@@ -67,7 +62,7 @@ public class PeopleManagement extends Manager implements Factory {
 	}
 	
 	public ArrayList<Integer> NumOfPotives(String keyword){
-		ArrayList<Integer> numbers = null;
+		ArrayList<Integer> numbers = new ArrayList<Integer>();
 		for (int i = 0; i<objectList.size(); i++) {
 			Person m = (Person) objectList.get(i);
 			if(m.matches(keyword))
@@ -77,7 +72,7 @@ public class PeopleManagement extends Manager implements Factory {
 	}
 	
 	public ArrayList<String> InfoOfPotives(String keyword){
-		ArrayList<String> info = null;
+		ArrayList<String> info = new ArrayList<String>();
 		for (int i = 0; i<objectList.size(); i++) {
 			Person m = (Person) objectList.get(i);
 			if(m.matches(keyword))
@@ -87,14 +82,26 @@ public class PeopleManagement extends Manager implements Factory {
 	}
 	
 	public ArrayList<String> matchPath(String keyword){
-		ArrayList<String> matchPathList = null;
+		ArrayList<String> matchPathList = new ArrayList<String>();
 		for (int i = 0; i<objectList.size(); i++) {
 			Person m = (Person) objectList.get(i);
 			if(m.matches(keyword)) {
 				matchPathList.add(m.searchOnePath(keyword)[0]);
-				matchPathList.add(m.searchOnePath(keyword)[1]);	
+				matchPathList.add(m.searchOnePath(keyword)[1]);
 			}
 		}
 		return matchPathList;
+	}
+	
+	public ArrayList<Person> findByDate(String date) {
+		ArrayList<Person> personList = new ArrayList<Person>();
+		
+		for (Manageable m : objectList) {
+			Person p = (Person) m;
+			if (p.matches(date)) {
+				personList.add(p);
+			}
+		}
+		return personList;
 	}
 }

@@ -34,7 +34,6 @@ public class GUIMain extends JFrame {
 		setDefaultGUI(container);
 
 		container.firstGUI = new FirstGUI();
-		container.printpplGUI = new PrintpplGUI();
 		container.LoginGUI = new LoginGUI();
 
 		container.add(container.firstGUI);
@@ -59,6 +58,7 @@ public class GUIMain extends JFrame {
 			getContentPane().add(firstGUI);
 		}
 		if (menuName.contains("확진자")) {
+			printpplGUI = new PrintpplGUI();
 			getContentPane().removeAll();
 			date = FirstGUI.getDate();
 			setDefaultGUI(this);

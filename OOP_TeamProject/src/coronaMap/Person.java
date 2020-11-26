@@ -11,7 +11,7 @@ public class Person implements Manageable, Split {
 	public ArrayList<String> pathList = new ArrayList<>();
 	public ArrayList<LocalTime> timeList = new ArrayList<>();
 	public String date;
-	int number;
+	public int number;
 	
 	@Override
 	public boolean matches(String keyword) {

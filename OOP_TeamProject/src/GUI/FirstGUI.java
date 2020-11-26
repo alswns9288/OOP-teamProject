@@ -25,6 +25,7 @@ public class FirstGUI extends JPanel {
 		setLayout(null);
 		setButtonAndText();
 		setInfectedNumber();
+		modifyNumberAndDate();
 		
 		previousDay.addMouseListener(new MouseAdapter() {
 			@Override
