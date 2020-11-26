@@ -15,31 +15,29 @@ import javax.swing.table.DefaultTableModel;
 import coronaMap.PeopleManagement;
 import coronaMap.Person;
 import manager.Manageable;
-import static GUI.FirstGUI.date;
+
 
 public class PrintpplGUI extends JPanel {
 	PeopleManagement pmanage = PeopleManagement.getInstance();
     public ArrayList<String> path = new ArrayList<>();
 	public ArrayList<LocalTime> time = new ArrayList<>();
     ArrayList<String> data = new ArrayList<String>();
-    int num = pmanage.searchNumber(date.format(DateTimeFormatter.ofPattern("M/d")));;
+    int num = pmanage.searchNumber(FirstGUI.getDate().format(DateTimeFormatter.ofPattern("M/d")));
+    String currentDate = null;
 	public PrintpplGUI() {
 		setTable();
 	}
   
 
-	private void setTable() { // 1 화포식당 영통점/12:20-경기대/13:30
+	private void setTable() { 
 		String header[] = { "확진자", "위치/시간"};
 		String contents[][] = new String[num][2];
 		DefaultTableModel myTable = new DefaultTableModel(contents, header);
 		
-		for (Manageable m: pmanage.objectList) {
-		      Person p = (Person)m;
-		      path=p.pathList;
-		      time=p.timeList;
-		    
-		     
-		      
+		for (int i=0; i<num; i++) {
+			  contents[i][0]=Integer.toString(i);
+			  currentDate=FirstGUI.getDate().format(DateTimeFormatter.ofPattern("MM/dd"));
+		      contents[i][1]=pmanage.find(currentDate); 
 		}
 		
 		JTable shownTable = new JTable(myTable);
