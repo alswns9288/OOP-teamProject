@@ -55,6 +55,17 @@ public class PeopleManagement extends Manager implements Factory {
 		return result;
 	}
 	
+	public ArrayList<String> find(String date){
+		ArrayList <String> data = new ArrayList<String>();
+		for (int i = 0; i<objectList.size(); i++) {
+			Person m = (Person) objectList.get(i);
+			if(m.matches(date))
+				data.add(m.pathList.get(i));
+			   
+		}
+		return data;
+	}
+	
 	public ArrayList<Integer> NumOfPotives(String keyword){
 		ArrayList<Integer> numbers = null;
 		for (int i = 0; i<objectList.size(); i++) {
