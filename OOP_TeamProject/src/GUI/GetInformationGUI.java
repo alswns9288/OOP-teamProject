@@ -16,7 +16,7 @@ import manager.*;
 
 public class GetInformationGUI extends JPanel implements Split {
 	UserManager userManager = UserManager.getInstance();
-	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd");
+	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d");
 	JPanel inner = new JPanel();
 	JTextField placeField = new JTextField();
 	JTextField timeField = new JTextField();
