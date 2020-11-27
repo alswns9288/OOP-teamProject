@@ -12,7 +12,7 @@ public class User implements Split {
 	public String date;
 
 	public User(LocalDate date) {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d");
 		this.date = date.format(formatter);
 	}
 

@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class PathCompareGUI extends JPanel {
-	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd");
+	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d");
 	PeopleManagement pmanage = PeopleManagement.getInstance();
 	UserManager uManage = UserManager.getInstance();
 	JTable myTable;
@@ -26,6 +26,8 @@ public class PathCompareGUI extends JPanel {
 	LocalDate myDay;
 	String myName;
 	String myCity = "영통구";
+	String resultToAdd;
+	JLabel resultLabel;
 	ArrayList<String> myPlace = new ArrayList<String>();
 	ArrayList<LocalTime> myTime = new ArrayList<LocalTime>();
 	ArrayList<Integer> everyDanger = new ArrayList<Integer>();
@@ -41,6 +43,7 @@ public class PathCompareGUI extends JPanel {
 		int resultDanger = computeResultDanger(everyDanger);
 		String result = myDay + " Danger Rate : " + resultDanger;
 		String necessary = null;
+		String color;
 		
 		switch (resultDanger) {
 		case 1:
@@ -55,16 +58,38 @@ public class PathCompareGUI extends JPanel {
 		case 4:
 			necessary += " Exam Required, Visited After Positive's visit more than 2";
 			break;
-		default:
+		case 5:
 			necessary += " Exam Required, Exactly Macthed";
 			break;
 		}
-		String resultToAdd = "<html>" + result + "<br>" + necessary + "</html>";
-		JLabel resultLabel = new JLabel(resultToAdd);
-		resultLabel.setForeground(Color.red);
+
+		resultToAdd = "<html>" + result + "<br>" + necessary + "</html>";
+		setLabel(resultDanger);
+		add(resultLabel, BorderLayout.NORTH);
+	}
+
+	private void setLabel(int resultDanger) {
+		resultLabel = new JLabel(resultToAdd);
+
+		switch (resultDanger) {
+		case 1:
+			resultLabel.setForeground(Color.blue);
+			break;
+		case 2:
+			resultLabel.setForeground(Color.green);
+			break;
+		case 3:
+			resultLabel.setForeground(Color.orange);
+			break;
+		case 4:
+			resultLabel.setForeground(Color.magenta);
+			break;
+		case 5:
+			resultLabel.setForeground(Color.red);
+			break;
+		}
 		resultLabel.setHorizontalAlignment(JLabel.CENTER);
 		resultLabel.setPreferredSize(new Dimension(400, 100));
-		add(resultLabel, BorderLayout.NORTH);
 	}
 
 	private void setMys() {
@@ -122,7 +147,6 @@ public class PathCompareGUI extends JPanel {
 		shownTable = new JTable(model);
 		JScrollPane jscrollPane = new JScrollPane(shownTable);
 		jscrollPane.setPreferredSize(new Dimension(400, 400));
-		// 위험도 별로 색깔 다르게 하기
 		add(jscrollPane, BorderLayout.SOUTH);
 		
 		model = (DefaultTableModel) shownTable.getModel();
@@ -134,6 +158,7 @@ public class PathCompareGUI extends JPanel {
 	private void setPositivesPath(DefaultTableModel model) {
 		LinkedHashMap<Integer, Integer> riskByPerson = uManage.getRiskByPerson(myDay.format(formatter)); // 확진자 번호, 위험도
 		for (Entry<Integer, Integer> entry : riskByPerson.entrySet()) {
+			
 			boolean first = true;
 			Person person;
 			Object[] row = new Object[4];
