@@ -1,7 +1,10 @@
 package GUI;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -32,6 +35,7 @@ public class GetInformationGUI extends JPanel implements Split {
 		setLayout(new BorderLayout());
 		setUserArea();
 		setShowArea();
+		setTableDateCenter();
 		if (userManager.getID() != null) {
 			showRegisteredData();
 		}
@@ -41,7 +45,7 @@ public class GetInformationGUI extends JPanel implements Split {
 	private void showRegisteredData() {
 		model = (DefaultTableModel) table.getModel();
 		model.setNumRows(0);
-
+		
 		ArrayList<String> pathAndTime = userManager.getPath(date);
 		if (pathAndTime == null) {
 			return;
@@ -65,7 +69,6 @@ public class GetInformationGUI extends JPanel implements Split {
 	}
 
 	private void setMemberPath(ArrayList<String> pathAndTime) {
-
 		for (String information : pathAndTime) {
 			System.out.println(information);
 			model = (DefaultTableModel) table.getModel();
@@ -79,6 +82,7 @@ public class GetInformationGUI extends JPanel implements Split {
 
 		model = new DefaultTableModel(contents, header);
 		table = new JTable(model);
+		
 		JScrollPane jscrollPane = new JScrollPane(table);
 
 		jscrollPane.setPreferredSize(new Dimension(400, 500));
@@ -130,7 +134,7 @@ public class GetInformationGUI extends JPanel implements Split {
 			user = userManager.fineUser(date);
 			user.addInformation(placeField.getText(), timeField.getText());
 		}
-
+		
 		clearTextField();
 		addTableRow();
 	}
@@ -146,6 +150,16 @@ public class GetInformationGUI extends JPanel implements Split {
 		timeField.setText("");
 		placeField.setText("");
 	}
+	
+	private void setTableDateCenter() {
+		DefaultTableCellRenderer tScheduleCellRenderer = new DefaultTableCellRenderer();
+		tScheduleCellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+		TableColumnModel tcmSchedule = table.getColumnModel();
+		
+		for (int i = 0; i < tcmSchedule.getColumnCount(); i++) {
+			tcmSchedule.getColumn(i).setCellRenderer(tScheduleCellRenderer);
+		}
+	}
 
 	class MyActionListener implements ActionListener {
 		@Override
@@ -157,8 +171,8 @@ public class GetInformationGUI extends JPanel implements Split {
 			}
 			if (button.getText().contentEquals("search")) {
 				removeAll();
-				userManager.print();
-				
+				PathCompareGUI pathCompareGUI = new PathCompareGUI();
+				add(pathCompareGUI);
 				revalidate();
 				repaint();
 			}

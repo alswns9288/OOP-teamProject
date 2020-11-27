@@ -2,45 +2,49 @@ package GUI;
 
 import java.awt.*;
 
-
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.table.*;
 
 import coronaMap.*;
 import manager.*;
 
-
 import java.awt.event.*;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class PathCompareGUI extends JPanel {
+	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd");
 	PeopleManagement pmanage = PeopleManagement.getInstance();
 	UserManager uManage = UserManager.getInstance();
-	int dangerRate = 1;
-	LocalDate myDay = null;
-	String myName = null;
-	String myCity = "Yountonggu";
+	JTable myTable;
+	JTable shownTable;
+	LocalDate myDay;
+	String myName;
+	String myCity = "영통구";
 	ArrayList<String> myPlace = new ArrayList<String>();
 	ArrayList<LocalTime> myTime = new ArrayList<LocalTime>();
 	ArrayList<Integer> everyDanger = new ArrayList<Integer>();
-	
+
 	public PathCompareGUI() {
 		setLayout(new BorderLayout());
 		setMyPath();
-		setPositivesPath();
+		setPositivesArea();
 		setResult();
 	}
-	
+
 	private void setResult() {
-		computeResultDanger(everyDanger);
-		String result = myDay + "Danger Rate : "+dangerRate; 
+		int resultDanger = computeResultDanger(everyDanger);
+		String result = myDay + " Danger Rate : " + resultDanger;
 		String necessary = null;
-		switch (dangerRate) {
+		
+		switch (resultDanger) {
 		case 1:
-			necessary += " No Exam Required, Only City Match"; 
+			necessary += " No Exam Required, Only City Matched";
 			break;
 		case 2:
 			necessary += " No Exam Required, Visited Before Positive's visit";
@@ -52,23 +56,28 @@ public class PathCompareGUI extends JPanel {
 			necessary += " Exam Required, Visited After Positive's visit more than 2";
 			break;
 		default:
-			necessary += " Exam Required, Exactly Macth";
+			necessary += " Exam Required, Exactly Macthed";
 			break;
 		}
-		String resultToAdd = "<html>"+result+"<br>"+necessary+"</html>";
+		String resultToAdd = "<html>" + result + "<br>" + necessary + "</html>";
 		JLabel resultLabel = new JLabel(resultToAdd);
 		resultLabel.setForeground(Color.red);
 		resultLabel.setHorizontalAlignment(JLabel.CENTER);
-		resultLabel.setPreferredSize(new Dimension(400, 20));		
-		add(resultLabel, BorderLayout.PAGE_START);
+		resultLabel.setPreferredSize(new Dimension(400, 100));
+		add(resultLabel, BorderLayout.NORTH);
 	}
-	
+
 	private void setMys() {
-		int NumOfMyPath = uManage.userList.size();
+		User user;
+		myName = uManage.getID();
 		myDay = FirstGUI.getDate();
-		for (int i = 0; i<NumOfMyPath; i++) {
-			split(uManage.userList.get(i).pathAndTime);
+
+		if (myName == null) {
+			myName = "Non-member";
 		}
+		user = uManage.fineUser(myDay.format(formatter));
+
+		split(user.getPathAndTime());
 	}
 
 	private void split(ArrayList<String> information) {
@@ -77,90 +86,116 @@ public class PathCompareGUI extends JPanel {
 			temp = string.split("/");
 			myPlace.add(temp[0]);
 			myTime.add(LocalTime.parse(temp[1]));
+			System.out.println(temp[0] + " " + temp[1]);
 		}
 	}
 
 	private void setMyPath() {
 		setMys();
-		String header[] = {"Me", "Day", "Place","Time"};
+		String header[] = { "Me", "City", "Place", "Time" };
 		String contents[][] = new String[myPlace.size()][4];
-		contents[0][0] = myCity;
-		contents[0][1] = myName;
+		contents[0][0] = myName;
+		contents[0][1] = myCity;
 		contents[0][2] = myPlace.get(0);
-		contents[0][2] = myTime.get(0)+"";
+		contents[0][3] = myTime.get(0) + "";
 		int i = 1;
-		while(i<myPlace.size()) {
+		while (i < myPlace.size()) {
 			contents[i][0] = null;
 			contents[i][1] = null;
 			contents[i][2] = myPlace.get(i);
-			contents[i][3] = myTime.get(i)+"";
+			contents[i][3] = myTime.get(i) + "";
 			i++;
 		}
-		
-		JTable myTable = new JTable(contents, header);
+
+		myTable = new JTable(contents, header);
+		setTableDateCenter(myTable);
 		JScrollPane jscrollPane = new JScrollPane(myTable);
 		jscrollPane.setPreferredSize(new Dimension(400, 300));
 		add(jscrollPane, BorderLayout.CENTER);
 	}
 
-	private void setPositivesPath() {
-		String header[] = {"City", "Danger Rate", "Place", "Time"};
-		String contents[][] = {{myCity, null, null, null}};
-		DefaultTableModel myTable = new DefaultTableModel(contents, header);
+	private void setPositivesArea() {
+		String header[] = { "Risk/Number", "City", "Place", "Time" };
+		String contents[][] = {};
+		DefaultTableModel model = new DefaultTableModel(contents, header);
 		
-		for(int i = 0; i<myPlace.size(); i++) {
-			contents[0][0] = null;
-			if(pmanage.search(myPlace.get(i))) {
-				contents[0][1] = computeDangerRate(i)+"";
-				int j = 0;
-				for(String s: pmanage.matchPath(myPlace.get(i))) {
-					if (j%2==0) 
-						contents[0][2] = s;
-					else
-						contents[0][3] = s;
-					myTable.addRow(contents);
+		shownTable = new JTable(model);
+		JScrollPane jscrollPane = new JScrollPane(shownTable);
+		jscrollPane.setPreferredSize(new Dimension(400, 400));
+		// 위험도 별로 색깔 다르게 하기
+		add(jscrollPane, BorderLayout.SOUTH);
+		
+		model = (DefaultTableModel) shownTable.getModel();
+		
+		setPositivesPath(model);
+		setTableDateCenter(shownTable);
+	}
+
+	private void setPositivesPath(DefaultTableModel model) {
+		LinkedHashMap<Integer, Integer> riskByPerson = uManage.getRiskByPerson(myDay.format(formatter)); // 확진자 번호, 위험도
+		for (Entry<Integer, Integer> entry : riskByPerson.entrySet()) {
+			boolean first = true;
+			Person person;
+			Object[] row = new Object[4];
+			everyDanger.add(entry.getValue());
+			row[0] = entry.getValue() + " / " + entry.getKey();
+			row[1] = myCity;
+
+			person = pmanage.findByNumber(entry.getKey() + "");
+			
+			for (int j = 0; j < person.pathList.size(); j++) {
+				if (first) {
+					row[2] = person.pathList.get(j);
+					row[3] = person.timeList.get(j);
+					first = false;
+				} else {
+					row[0] = null;
+					row[1] = null;
+					row[2] = person.pathList.get(j);
+					row[3] = person.timeList.get(j);
+				}
+				model.addRow(row);
+			}
+		}
+	}
+
+	private int computeResultDanger(ArrayList<Integer> inputDanger) {
+		if (inputDanger.contains(5)) {
+			return 5;
+		}
+
+		if (inputDanger.contains(4)) {
+			return 4;
+		}
+		
+		if (inputDanger.contains(3)) {
+			int count = 0;
+
+			for (int result : inputDanger) {
+				if (result == 3) {
+					count++;
 				}
 			}
-		}
-		
-		JTable shownTable = new JTable(myTable);
-		JScrollPane jscrollPane = new JScrollPane(shownTable);
-		jscrollPane.setPreferredSize(new Dimension(400, 300));
-		// 위험도 별로 색깔 다르게 하기
-		add(jscrollPane, BorderLayout.PAGE_END);
-	}
-	
-	private int computeDangerRate(int num) {
-		int danger = 1;
-		if (pmanage.search(myPlace.get(num))) {
-			danger++;
-			LocalTime positivesTime = null;//null값에 위에서 겹친 확진자의 시간이 들어간다.
-			if(myTime.get(num).isBefore(positivesTime)) {
-				danger++;
-			}
-			if(myTime.get(num).equals(positivesTime)) {
-				danger += 3;
+			if (count > 1) {
+				return 4;
+			} else {
+				return 3;
 			}
 		}
-		everyDanger.add(danger);
-		return danger;
-	}
-	
-	private int computeResultDanger(ArrayList<Integer> inputDanger) {
-		int result = 1;
-		ArrayList<Integer> ind = new ArrayList<Integer>();
-		if(inputDanger.contains(2)) 
-			result = 2;
-		for(int i = 0; i<inputDanger.size(); i++) {
-			ind.add(inputDanger.indexOf(3));
-		}
-		if(ind.size()==1) 
-			result = 3;
-		else if(ind.size()>1)
-			result = 4;
-		if(inputDanger.contains(5))
-			result = 5;
 		
-		return result;
+		if (inputDanger.contains(2)) {
+			return 2;
+		}
+		return 1;
+	}
+
+	private void setTableDateCenter(JTable table) {
+		DefaultTableCellRenderer tScheduleCellRenderer = new DefaultTableCellRenderer();
+		tScheduleCellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+		TableColumnModel tcmSchedule = table.getColumnModel();
+
+		for (int i = 0; i < tcmSchedule.getColumnCount(); i++) {
+			tcmSchedule.getColumn(i).setCellRenderer(tScheduleCellRenderer);
+		}
 	}
 }

@@ -1,6 +1,7 @@
 package coronaMap;
 
 import java.io.*;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
 
@@ -18,6 +19,9 @@ public class Person implements Manageable, Split {
 		if (keyword.contentEquals(date)) {
 			return true;
 		}
+		if (keyword.contentEquals(Integer.toString(number))) {
+			return true;
+		}
 		for (int i = 0; i < pathList.size(); i++) {
 			String path = pathList.get(i) + "/" + timeList.get(i);
 			if (path.contains(keyword)) {
@@ -27,26 +31,17 @@ public class Person implements Manageable, Split {
 		return false;
 	}
 	
-	public String[] searchOnePath(String keyword){
-		String[] pathArray = new String[2];
-		for (int i = 0; i < pathList.size(); i++) {
-			String path = pathList.get(i) + "/" + timeList.get(i);
-			if (path.contains(keyword)) {
-				pathArray[0] = pathList.get(i);
-				pathArray[1] = timeList.get(i) + "";
-			}
-		}
-		return pathArray;
-	}
-	
-	public String toString() {
-		String toStr = null;
-		toStr = number + "-"+ date;
-		for (int i = 0; i < pathList.size()-1; i++) {
-			toStr += "-" + pathList.get(i) + "/" + timeList.get(i);
-		}
-		return toString(); // format : 1-11/1-path1/time1-path2/time2...
-	}
+//	public String[] searchOnePath(String keyword){
+//		String[] pathArray = new String[2];
+//		for (int i = 0; i < pathList.size(); i++) {
+//			String path = pathList.get(i) + "/" + timeList.get(i);
+//			if (path.contains(keyword)) {
+//				pathArray[0] = pathList.get(i);
+//				pathArray[1] = timeList.get(i) + "";
+//			}
+//		}
+//		return pathArray;
+//	}
 
 	@Override
 	public void readFile(Scanner scanFile) {

@@ -10,10 +10,12 @@ import java.util.Map.Entry;
 import GUI.FirstGUI;
 import coronaMap.User;
 import coronaMap.Member;
+import coronaMap.PeopleManagement;
+import coronaMap.Person;
 
 public class UserManager {
 	private static UserManager instance;
-	public ArrayList<User> userList = new ArrayList<>();
+	public ArrayList<User> userList = new ArrayList<>(); // 날짜별로 유저에 저장됨
 	public ArrayList<Member> memberList = new ArrayList<>();
 	private String userID;
 
@@ -121,9 +123,6 @@ public class UserManager {
 				user.addInformation(entry.getValue());
 			}
 		}
-		for (User u: userList) {
-			System.out.println(u.date);
-		}
 	}
 	
 	public ArrayList<String> getPath(String date) {
@@ -131,9 +130,6 @@ public class UserManager {
 		readMemberPath();
 		User user = fineUser(date);
 		if (user == null) {
-			System.out.println();
-			System.out.println();
-			System.out.println("null");
 			return null;
 		}
 		
@@ -141,11 +137,23 @@ public class UserManager {
 		
 		return pathAndTime;
 	}
-
-	public void print() {
-		for (User u: userList) {
-			u.print();
+	
+	public LinkedHashMap<Integer, Integer> getRiskByPerson(String date) {
+		PeopleManagement peopleManager = PeopleManagement.getInstance();
+		LinkedHashMap<Integer, Integer> riskByPerson = new LinkedHashMap<Integer, Integer>();
+		ArrayList<Person> personList = peopleManager.findByDate(date);
+		User user = fineUser(date);
+		int value = 0;
+		
+		if (user == null) {
+			return null;
 		}
-	}
 
+		for (Person person : personList) {
+			value = user.calcRisk(person);
+			riskByPerson.put(person.number, value);
+		}
+		
+		return riskByPerson;
+	}
 }
