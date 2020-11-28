@@ -26,6 +26,8 @@ public class PrintpplGUI extends JPanel {
 		num = peopleManagement.searchNumber(date);
 		setTable();
 		setTableDateCenter();
+		table.getColumnModel().getColumn(0).setPreferredWidth(100);
+		table.getColumnModel().getColumn(1).setPreferredWidth(300);
 		showRegisteredDate();
 	}
 
@@ -33,9 +35,6 @@ public class PrintpplGUI extends JPanel {
 		if (num < 1) {
 			return;
 		}
-
-		table.getColumnModel().getColumn(0).setPreferredWidth(100);
-		table.getColumnModel().getColumn(1).setPreferredWidth(300);
 
 		person = peopleManagement.findByDate(date);
 		String path = null;

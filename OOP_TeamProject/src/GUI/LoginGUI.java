@@ -73,8 +73,8 @@ public class LoginGUI extends JPanel {
 			management = new JButton("관리");
 			management.setBounds(50, 460, 290, 50);
 			add(management);
+			addActionListener(management);
 		}
-		
 		revalidate();
 		repaint();
 	}
@@ -120,6 +120,7 @@ public class LoginGUI extends JPanel {
 		add(LabelPassword);	
 	}	
 	
+	
 	class MyActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -127,13 +128,16 @@ public class LoginGUI extends JPanel {
 				removeAll();
 				userManager.userList.clear(); // 로그아웃했다가 다시 로그인하면 정보 비우기
 				userManager.setID(null);
-				
 				JOptionPane.showMessageDialog(null, "로그아웃 되었습니다.");
 				createAndShow();
 				revalidate();
 				repaint();
 			}
-
+			
+			if (e.getSource() == management) {
+				ManagerModeGUI management = new ManagerModeGUI();
+				management.createAndShow();
+			}
 		}
 	}
 }

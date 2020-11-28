@@ -18,8 +18,8 @@ public class SignUpGUI extends JFrame {
 	public void creatAndShowGUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("회원가입");
-		setPreferredSize(new Dimension(400, 730));
-		setLocation(500, 50);
+		setPreferredSize(new Dimension(380, 500));
+		setLocation(510, 150);
 		background = new JPanel();
 		setContentPane(background);
 		background.setLayout(null);

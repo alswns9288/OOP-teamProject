@@ -21,8 +21,8 @@ public class GetInformationGUI extends JPanel implements Split {
 	JTextField placeField = new JTextField();
 	JTextField timeField = new JTextField();
 	JTextField cityField = new JTextField();
-	JButton addButton = new JButton("add");
-	JButton searchButton = new JButton("search");
+	JButton addButton = new JButton("추가");
+	JButton searchButton = new JButton("검색");
 	DefaultTableModel model;
 	JTable table;
 	String time, place;
@@ -31,7 +31,6 @@ public class GetInformationGUI extends JPanel implements Split {
 	User user;
 
 	public GetInformationGUI() {
-
 		setLayout(new BorderLayout());
 		setUserArea();
 		setShowArea();
