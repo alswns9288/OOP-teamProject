@@ -64,7 +64,7 @@ public class PeopleManagement extends Manager implements Factory {
 	public Person findByNumber(String number) {
 		for (Manageable m : objectList) {
 			Person p = (Person) m;
-			if (p.matches(number)) {
+			if (p.matchesNumber(number)) {
 				return p;
 			}
 		}

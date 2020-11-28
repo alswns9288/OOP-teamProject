@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class PathCompareGUI extends JPanel {
-	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d");
+	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd");
 	PeopleManagement pmanage = PeopleManagement.getInstance();
 	UserManager uManage = UserManager.getInstance();
 	JTable myTable;

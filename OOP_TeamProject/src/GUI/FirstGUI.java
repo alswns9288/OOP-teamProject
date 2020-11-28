@@ -62,7 +62,7 @@ public class FirstGUI extends JPanel {
 		PeopleManagement peopleManagement = PeopleManagement.getInstance();
 		
 		dateField.setText(date.toString());
-		infectedNumber = peopleManagement.searchNumber(date.format(DateTimeFormatter.ofPattern("M/d")));
+		infectedNumber = peopleManagement.searchNumber(date.format(DateTimeFormatter.ofPattern("MM/dd")));
 		number.setText(infectedNumber + "Έν");
 	}
 

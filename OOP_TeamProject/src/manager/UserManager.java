@@ -102,7 +102,7 @@ public class UserManager {
 	}
 
 	public void setUser(Member member) {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd");
 		HashMap<String, String> tmp = member.getPathByDate(FirstGUI.getDate().format(formatter));
 		User user = null;
 		String date = null;

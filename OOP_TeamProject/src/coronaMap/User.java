@@ -13,7 +13,7 @@ public class User implements Split {
 	public String date;
 
 	public User(LocalDate date) {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd");
 		this.date = date.format(formatter);
 	}
 
@@ -70,6 +70,7 @@ public class User implements Split {
 					if (state.contentEquals("Before")) { // 유저가 확진자 전에 다녀감
 						tmp.add(2);
 					} else if (state.contentEquals("Equal")) {
+						System.out.println(pathList.get(i) + " " + person.pathList.get(j));
 						tmp.add(5);
 					} else if (state.contentEquals("After")) {
 						tmp.add(3);
@@ -90,9 +91,6 @@ public class User implements Split {
 	}
 
 	private int calcResult(ArrayList<Integer> resultList) {
-		for (int i : resultList) {
-			System.out.println(i);
-		}
 		if (resultList.contains(5)) {
 			return 5;
 		}

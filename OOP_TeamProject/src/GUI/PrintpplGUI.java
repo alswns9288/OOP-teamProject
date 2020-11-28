@@ -15,7 +15,7 @@ public class PrintpplGUI extends JPanel {
 	ArrayList<String> pathList;
 	ArrayList<LocalTime> timeList;
 	PeopleManagement peopleManagement = PeopleManagement.getInstance();
-	String date = FirstGUI.getDate().format(DateTimeFormatter.ofPattern("M/d"));
+	String date = FirstGUI.getDate().format(DateTimeFormatter.ofPattern("MM/dd"));
 	DefaultTableModel model;
 	JTable table;
 	int num;

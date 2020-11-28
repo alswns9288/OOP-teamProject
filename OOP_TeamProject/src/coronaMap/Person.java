@@ -30,18 +30,6 @@ public class Person implements Manageable, Split {
 		}
 		return false;
 	}
-	
-//	public String[] searchOnePath(String keyword){
-//		String[] pathArray = new String[2];
-//		for (int i = 0; i < pathList.size(); i++) {
-//			String path = pathList.get(i) + "/" + timeList.get(i);
-//			if (path.contains(keyword)) {
-//				pathArray[0] = pathList.get(i);
-//				pathArray[1] = timeList.get(i) + "";
-//			}
-//		}
-//		return pathArray;
-//	}
 
 	@Override
 	public void readFile(Scanner scanFile) {
@@ -106,5 +94,12 @@ public class Person implements Manageable, Split {
 				System.exit(0);
 			}
 		}
+	}
+
+	public boolean matchesNumber(String number) {
+		if (number.contentEquals(Integer.toString(this.number))) {
+			return true;
+		}
+		return false;
 	}
 }
