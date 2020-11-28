@@ -78,15 +78,15 @@ public class GUIMain extends JFrame {
 			setDefaultGUI(this);
 			getContentPane().add(LoginGUI);
 		}
-		if (menuName.contains("로그아웃")) {
-			userManager.userList.clear(); // 로그아웃했다가 다시 로그인하면 정보 비우기
-			userManager.setID(null);
-			getContentPane().removeAll();
-			date = FirstGUI.getDate();
-			setDefaultGUI(this);
-			getContentPane().add(LoginGUI);
-			JOptionPane.showMessageDialog(null, "로그아웃 되었습니다.");
-		}
+//		if (menuName.contains("로그아웃")) {
+//			userManager.userList.clear(); // 로그아웃했다가 다시 로그인하면 정보 비우기
+//			userManager.setID(null);
+//			getContentPane().removeAll();
+//			date = FirstGUI.getDate();
+//			setDefaultGUI(this);
+//			getContentPane().add(LoginGUI);
+//			JOptionPane.showMessageDialog(null, "로그아웃 되었습니다.");
+//		}
 		revalidate();
 		repaint();
 	}
@@ -121,7 +121,7 @@ public class GUIMain extends JFrame {
 		if (userID == null) {
 			signIn = new JButton("로그인");
 		} else {
-			signIn = new JButton("로그아웃");
+			signIn = new JButton(userManager.getID());
 		}
 		signIn.setSize(50, 100);
 		hideJButton(menu, signIn);
@@ -156,18 +156,24 @@ public class GUIMain extends JFrame {
 			if (e.getSource() == search2) {
 				changeGUI("경로비교");
 				search2.setBackground(Color.LIGHT_GRAY);
+				
 			}
 			if (e.getSource() == signIn) {
-				String s = signIn.getText();
-				if(s.contentEquals("로그인")) {
-					changeGUI("로그인");
-					signIn.setBackground(Color.LIGHT_GRAY);
-				}
-				else if(s.contentEquals("로그아웃")) {
-					changeGUI("로그아웃");
-					signIn.setBackground(Color.LIGHT_GRAY);
-				}
-			}	
+				changeGUI("로그인");
+				signIn.setBackground(Color.LIGHT_GRAY);
+			}
+//			if (e.getSource() == signIn) {
+//				
+//				String s = signIn.getText();
+//				if(s.contentEquals("로그인")) {
+//					changeGUI("로그인");
+//					signIn.setBackground(Color.LIGHT_GRAY);
+//				}
+//				else if(s.contentEquals("로그아웃")) {
+//					changeGUI("로그아웃");
+//					signIn.setBackground(Color.LIGHT_GRAY);
+//				}
+//			}
 		}
 	}
 }

@@ -11,12 +11,18 @@ import manager.*;
 public class Member {
 	public HashMap<String, String> pathByDate = new HashMap<>();
 	public String name;
+	public String password;
+	boolean admin;
 	
-	public Member(String userID) {
-		name = userID;
+	public Member(String userID, String password) {
+		name = userID.trim();
+		this.password = password.trim();
 	}
 
 	public void readFile(String fileName) {
+		if (admin) {
+			return;
+		}
 		Scanner scanFile = openFile(fileName);
 		
 		while (scanFile.hasNext()) {
@@ -51,5 +57,9 @@ public class Member {
 		}
 		System.out.println("null: Member getPathByDate");
 		return null;
+	}
+	
+	public void setAdmin() {
+		admin = true;
 	}
 }

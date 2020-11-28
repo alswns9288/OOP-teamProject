@@ -163,12 +163,10 @@ public class GetInformationGUI extends JPanel implements Split {
 	class MyActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			JButton button = (JButton) e.getSource();
-
-			if (button.getText().contentEquals("add")) {
+			if (e.getSource() == addButton) {
 				addUserPath();
 			}
-			if (button.getText().contentEquals("search")) {
+			if (e.getSource() == searchButton) {
 				removeAll();
 				PathCompareGUI pathCompareGUI = new PathCompareGUI();
 				add(pathCompareGUI);

@@ -18,6 +18,7 @@ public class UserManager {
 	public ArrayList<User> userList = new ArrayList<>(); // 날짜별로 유저에 저장됨
 	public ArrayList<Member> memberList = new ArrayList<>();
 	private String userID;
+	private boolean admin;
 
 	private UserManager() {}
 	
@@ -28,14 +29,22 @@ public class UserManager {
 		return instance;
 	}
 
-	public boolean login(String ID) {
+	public boolean login(String ID, String password) {
 		for (Member member: memberList) {
-			if (member.name.contentEquals(ID)) {
+			if (member.name.contentEquals(ID) && member.password.contentEquals(password)) {
 				userID = ID;
+				if (ID.contentEquals("admin")) {
+					member.setAdmin();
+					admin = true;
+				}
 				return true;
 			}
 		}
 		return false;
+	}
+	
+	public boolean isAdmin() {
+		return admin;
 	}
 	
 	public String getID() {
@@ -43,6 +52,7 @@ public class UserManager {
 	}
 	
 	public void setID(String string) {
+		admin = false;
 		userID = string;
 	}
 	
@@ -63,11 +73,13 @@ public class UserManager {
 		Scanner scanFile = openFile(fileName);
 		Member member = null;
 		String userID = null;
+		String password = null;
 		
 		while (scanFile.hasNext()) {
-			userID = scanFile.nextLine();
+			userID = scanFile.next();
+			password = scanFile.nextLine();
 			
-			member = new Member(userID);
+			member = new Member(userID, password);
 			memberList.add(member);
 		}
 		scanFile.close();
