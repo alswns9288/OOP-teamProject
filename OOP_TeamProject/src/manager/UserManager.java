@@ -150,6 +150,7 @@ public class UserManager {
 		}
 
 		for (Person person : personList) {
+			System.out.println(person.number);
 			value = user.calcRisk(person);
 			riskByPerson.put(person.number, value);
 		}

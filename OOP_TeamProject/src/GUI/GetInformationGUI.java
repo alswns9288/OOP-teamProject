@@ -70,7 +70,6 @@ public class GetInformationGUI extends JPanel implements Split {
 
 	private void setMemberPath(ArrayList<String> pathAndTime) {
 		for (String information : pathAndTime) {
-			System.out.println(information);
 			model = (DefaultTableModel) table.getModel();
 			split(information);
 		}

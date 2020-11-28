@@ -34,12 +34,10 @@ public class LoginGUI extends JPanel {
 				boolean state = false;
 				
 				state = userManager.login(Username.getText());
-				System.out.println(state);
 				Username.setText("");
 				Password.setText("");
 				if (state) {
 					JOptionPane.showMessageDialog(null, "로그인 되었습니다");
-					System.out.println("is operated?");
 					userManager.readMemberPath();
 					return;
 				}

@@ -1,5 +1,6 @@
 package coronaMap;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -60,28 +61,38 @@ public class User implements Split {
 
 		for (int i = 0; i < pathList.size(); i++) {
 			for (int j = 0; j < person.pathList.size(); j++) {
+				ArrayList<Integer> tmp = new ArrayList<Integer>();
+
 				if (pathList.get(i).contentEquals(person.pathList.get(j))) {
 					String state = null;
 
 					state = compareTime(timeList.get(i), person.timeList.get(j));
 					if (state.contentEquals("Before")) { // 유저가 확진자 전에 다녀감
-						resultList.add(2);
+						tmp.add(2);
 					} else if (state.contentEquals("Equal")) {
-						resultList.add(5);
+						tmp.add(5);
 					} else if (state.contentEquals("After")) {
-						resultList.add(3);
+						tmp.add(3);
+					} else {
+						tmp.add(1);
 					}
 				} else {
-					resultList.add(1);
+					tmp.add(1);
 				}
+				resultList.clear();
+				resultList = tmp;
 			}
 		}
+		System.out.println(" size: " + resultList.size());
 		result = calcResult(resultList);
 
 		return result;
 	}
 
 	private int calcResult(ArrayList<Integer> resultList) {
+		for (int i : resultList) {
+			System.out.println(i);
+		}
 		if (resultList.contains(5)) {
 			return 5;
 		}
@@ -100,7 +111,7 @@ public class User implements Split {
 				return 3;
 			}
 		}
-		
+
 		if (resultList.contains(2)) {
 			return 2;
 		}
@@ -108,13 +119,17 @@ public class User implements Split {
 	}
 
 	private String compareTime(LocalTime time, LocalTime PersonTime) {
-		if (time.isBefore(PersonTime)) { // 유저가 확진자 전에 다녀감
-			return "Before";
-		} else if (time.toString().contentEquals(PersonTime.toString())) {
+		if (time.toString().contentEquals(PersonTime.toString())) {
 			return "Equal";
-		} else if (time.isAfter(PersonTime)) {
+		}
+		Duration duration = Duration.between(time, PersonTime);
+		boolean state = -7200 <= duration.getSeconds() && duration.getSeconds() <= 7200;
+
+		if (time.isBefore(PersonTime) && state) { // 유저가 확진자 전에 다녀감
+			return "Before";
+		} else if (time.isAfter(PersonTime) && state) {
 			return "After";
 		}
-		return null;
+		return "Safe";
 	}
 }

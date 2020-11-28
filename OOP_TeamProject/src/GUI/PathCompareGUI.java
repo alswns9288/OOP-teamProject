@@ -43,7 +43,6 @@ public class PathCompareGUI extends JPanel {
 		int resultDanger = computeResultDanger(everyDanger);
 		String result = myDay + " Danger Rate : " + resultDanger;
 		String necessary = null;
-		String color;
 		
 		switch (resultDanger) {
 		case 1:
@@ -111,7 +110,6 @@ public class PathCompareGUI extends JPanel {
 			temp = string.split("/");
 			myPlace.add(temp[0]);
 			myTime.add(LocalTime.parse(temp[1]));
-			System.out.println(temp[0] + " " + temp[1]);
 		}
 	}
 
