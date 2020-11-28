@@ -47,19 +47,19 @@ public class PathCompareGUI extends JPanel {
 		
 		switch (resultDanger) {
 		case 1:
-			necessary += " No Exam Required, Only City Matched";
+			necessary = " 검사 불필요, 도시만 일치";
 			break;
 		case 2:
-			necessary += " No Exam Required, Visited Before Positive's visit";
+			necessary = " 검사 불필요, 확진자 방문 이전 방문";
 			break;
 		case 3:
-			necessary += " Exam Required, Visited After Positive's visit";
+			necessary = " 검사 필요, 확진자 방문 이후 방문";
 			break;
 		case 4:
-			necessary += " Exam Required, Visited After Positive's visit more than 2";
+			necessary = " 검사 필요, 확진자 방문 이후 2회 이상 방문";
 			break;
 		case 5:
-			necessary += " Exam Required, Exactly Macthed";
+			necessary = " E검사 필요, 확진자와 동선 일치!!";
 			break;
 		}
 
@@ -117,7 +117,7 @@ public class PathCompareGUI extends JPanel {
 
 	private void setMyPath() {
 		setMys();
-		String header[] = { "Me", "City", "Place", "Time" };
+		String header[] = { "나", "도시", "장소", "시간" };
 		String contents[][] = new String[myPlace.size()][4];
 		contents[0][0] = myName;
 		contents[0][1] = myCity;
@@ -140,7 +140,7 @@ public class PathCompareGUI extends JPanel {
 	}
 
 	private void setPositivesArea() {
-		String header[] = { "Risk/Number", "City", "Place", "Time" };
+		String header[] = { "위험도/번호", "도시", "장소", "시간" };
 		String contents[][] = {};
 		DefaultTableModel model = new DefaultTableModel(contents, header);
 		
