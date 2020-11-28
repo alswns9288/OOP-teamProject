@@ -5,7 +5,7 @@ import java.util.*;
 
 public abstract class Manager {
 	Scanner scan = new Scanner(System.in);
-	public ArrayList<Manageable> objectList = new ArrayList<>();
+	ArrayList<Manageable> objectList = new ArrayList<>();
 
 	public void readAll(String fileName, Factory factory) {
 		Scanner scanFile = (Scanner) openFile(fileName, true);
@@ -24,16 +24,6 @@ public abstract class Manager {
 		for (Manageable object : objectList) {
 			object.print();
 		}
-	}
-
-	public void addInformation(String fileName, Factory factory) {
-		BufferedWriter writeFile = (BufferedWriter) openFile(fileName, false);
-		Manageable object = null;
-		System.out.println("추가\n");
-
-		object = factory.create();
-		object.addInformation(writeFile, scan);
-		objectList.add(object);
 	}
 
 	public void search() {
@@ -58,7 +48,7 @@ public abstract class Manager {
 		return objectList;
 	}
 
-	Object openFile(String fileName, boolean type) { // 수정 기능을 넣으면 openFile원래대로하고, 수정 기능과 추가 기능 묶어서 파일 여는 메소드 만들면 되나?
+	protected Object openFile(String fileName, boolean type) { // 수정 기능을 넣으면 openFile원래대로하고, 수정 기능과 추가 기능 묶어서 파일 여는 메소드 만들면 되나?
 		if (type) {
 			Scanner scanFile = null;
 

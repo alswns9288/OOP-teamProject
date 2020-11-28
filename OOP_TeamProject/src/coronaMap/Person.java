@@ -67,35 +67,6 @@ public class Person implements Manageable, Split {
 		}
 	}
 
-	@Override
-	public void addInformation(BufferedWriter writeFile, Scanner scan) { // 입력 받는 형식: 장소1/시간1 장소2/장소2
-		PeopleManagement peopleManagement = PeopleManagement.getInstance();
-		
-		int newNumber = peopleManagement.number;
-		
-		while (true) {
-			String path[] = new String[100];
-			newNumber += 1;
-			System.out.print(">> ");
-			path[0] = scan.next();
-			if (path[0].contentEquals("end")) {
-				break;
-			}
-			path[1] = scan.next();
-			try { // 만약에 경로를 많이 받는다면 ArrayList로 받을 것 
-				writeFile.newLine();
-				writeFile.write(newNumber + " ");
-				writeFile.write(path[0]);
-				writeFile.write("-");
-				writeFile.write(path[1]);
-				writeFile.flush(); // 버퍼를 출력
-			} catch (IOException e) {
-				System.out.println("Fail! Person.addInformation");
-				System.exit(0);
-			}
-		}
-	}
-
 	public boolean matchesNumber(String number) {
 		if (number.contentEquals(Integer.toString(this.number))) {
 			return true;

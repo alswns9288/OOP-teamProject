@@ -24,7 +24,7 @@ public class PlaceManagement extends Manager implements Factory {
 	}
 	
 	public boolean search(String keyword) {
-		for (Manageable place : objectList) {
+		for (Manageable place : getList()) {
 			if (place.matches(keyword)) {
 				return true;
 			}
@@ -32,7 +32,7 @@ public class PlaceManagement extends Manager implements Factory {
 		return false;
 	}
 	public void printList() {
-		for (Manageable place : objectList) {
+		for (Manageable place : getList()) {
 			place.print();
 		}
 	}

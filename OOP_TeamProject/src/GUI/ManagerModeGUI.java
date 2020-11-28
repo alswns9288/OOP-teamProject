@@ -20,26 +20,29 @@ import manager.Manageable;
 public class ManagerModeGUI extends JFrame {
 	ArrayList<String> pathList;
 	ArrayList<LocalTime> timeList;
+	ArrayList<String> pathAndTimeList = new ArrayList<String>();
 	PeopleManagement peopleManagement = PeopleManagement.getInstance();
 	DefaultTableModel model;
 	JTable table;
 	JButton addButton;
-	JTextField numberButton;
-	JTextField timeButton;
-	JTextField placeButton;
+	JButton doneButton;
+	JTextField timeField;
+	JTextField placeField;
 	boolean pre;
 
 	public void createAndShow() {
 		setTitle("관리");
-		setPreferredSize(new Dimension(350, 600));
-		setLocation(525, 100);
+		setPreferredSize(new Dimension(360, 600));
+		setLocation(520, 100);
 
 		setTable();
 		showRegisteredDate();
 		setInputArae();
-		setTableDateCenter();
+		setTableDataCenter();
+		pre = false;
 		table.getColumnModel().getColumn(0).setPreferredWidth(80);
-		table.getColumnModel().getColumn(1).setPreferredWidth(270);
+		table.getColumnModel().getColumn(1).setPreferredWidth(280);
+		addActionListener(addButton, doneButton);
 
 		pack();
 		setVisible(true);
@@ -48,7 +51,7 @@ public class ManagerModeGUI extends JFrame {
 	private void setInputArae() {
 		JPanel bottom = new JPanel();
 		bottom.setLayout(null);
-		bottom.setPreferredSize(new Dimension(350, 100));
+		bottom.setPreferredSize(new Dimension(360, 100));
 
 		setButtons(bottom);
 
@@ -56,20 +59,20 @@ public class ManagerModeGUI extends JFrame {
 	}
 
 	private void setButtons(JPanel bottom) {
-		numberButton = new JTextField();
-		placeButton = new JTextField();
-		timeButton = new JTextField();
+		placeField = new JTextField();
+		timeField = new JTextField();
 		addButton = new JButton("추가");
+		doneButton = new JButton("완료");
 
-		numberButton.setBounds(7, 50, 45, 35);
-		placeButton.setBounds(55, 50, 125, 35);
-		timeButton.setBounds(183, 50, 85, 35);
-		addButton.setBounds(271, 50, 60, 35);
+		placeField.setBounds(4, 50, 125, 35);
+		timeField.setBounds(133, 50, 85, 35);
+		addButton.setBounds(222, 50, 58, 35);
+		doneButton.setBounds(284, 50, 58, 35);
 
-		bottom.add(numberButton);
-		bottom.add(placeButton);
-		bottom.add(timeButton);
+		bottom.add(placeField);
+		bottom.add(timeField);
 		bottom.add(addButton);
+		bottom.add(doneButton);
 	}
 
 	private void showRegisteredDate() {
@@ -81,13 +84,12 @@ public class ManagerModeGUI extends JFrame {
 			personList.add(p);
 		}
 
-		System.out.println(personList.size());
 		for (Person p : personList) {
 			pre = false;
 			pathList = p.pathList;
 			timeList = p.timeList;
 			for (int i = 0; i < pathList.size(); i++) {
-				String path = "   " + pathList.get(i) + " / " + timeList.get(i);
+				String path = pathList.get(i) + "/" + timeList.get(i);
 				addTableRow(p.number, path);
 				pre = true;
 			}
@@ -112,11 +114,11 @@ public class ManagerModeGUI extends JFrame {
 		table = new JTable(model);
 
 		JScrollPane jscrollPane = new JScrollPane(table);
-		jscrollPane.setPreferredSize(new Dimension(350, 500));
+		jscrollPane.setPreferredSize(new Dimension(360, 500));
 		add(jscrollPane, BorderLayout.NORTH);
 	}
 
-	private void setTableDateCenter() {
+	private void setTableDataCenter() {
 		DefaultTableCellRenderer tScheduleCellRenderer = new DefaultTableCellRenderer();
 		tScheduleCellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 		TableColumnModel tcmSchedule = table.getColumnModel();
@@ -127,20 +129,28 @@ public class ManagerModeGUI extends JFrame {
 	}
 
 	private void addNewPath() {
-		int lastNumber = 0;
-		
+		String pathAndTime = null;
+		int targetNumber = peopleManagement.number + 1;
 
+		pathAndTime = placeField.getText() + "/" + timeField.getText();
+		pathAndTimeList.add(pathAndTime);
+
+		addTableRow(targetNumber, pathAndTime);
 		clearTextField();
-		addNewRow();
+		pre = true;
 	}
-	
-	private void addNewRow() {
-		
+
+	public void addNewPositives() {
+		pre = false;
+		peopleManagement.addInformation(pathAndTimeList);
+		pathAndTimeList.clear();
+		peopleManagement.readAll();
 	}
 
 	private void clearTextField() {
-		placeButton.setText("");
-		timeButton.setText("");
+		System.out.println("3");
+		placeField.setText("");
+		timeField.setText("");
 	}
 
 	private void addActionListener(JButton... buttons) {
@@ -154,6 +164,10 @@ public class ManagerModeGUI extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == addButton) {
 				addNewPath();
+			}
+			if (e.getSource() == doneButton) {
+				JOptionPane.showMessageDialog(null, "추가 되었습니다.");
+				addNewPositives();
 			}
 		}
 	}

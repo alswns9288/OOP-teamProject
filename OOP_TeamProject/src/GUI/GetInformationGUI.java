@@ -34,7 +34,7 @@ public class GetInformationGUI extends JPanel implements Split {
 		setLayout(new BorderLayout());
 		setUserArea();
 		setShowArea();
-		setTableDateCenter();
+		setTableDataCenter();
 		if (userManager.getID() != null) {
 			showRegisteredData();
 		}
@@ -149,7 +149,7 @@ public class GetInformationGUI extends JPanel implements Split {
 		placeField.setText("");
 	}
 	
-	private void setTableDateCenter() {
+	private void setTableDataCenter() {
 		DefaultTableCellRenderer tScheduleCellRenderer = new DefaultTableCellRenderer();
 		tScheduleCellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 		TableColumnModel tcmSchedule = table.getColumnModel();
