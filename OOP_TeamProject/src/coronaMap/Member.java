@@ -3,9 +3,11 @@ package coronaMap;
 import java.io.*;
 
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.Map.Entry;
 
+import GUI.FirstGUI;
 import manager.*;
 
 public class Member {
@@ -61,5 +63,26 @@ public class Member {
 	
 	public void setAdmin() {
 		admin = true;
+	}
+
+	public void addInformation(ArrayList<String> pathAndTimeList, String date, BufferedWriter writeFile) {
+		int count = 0;
+	
+		try {
+			writeFile.newLine();
+			writeFile.write(date + " ");
+			for (String pathAndTime : pathAndTimeList) {
+				count++;
+				if (count == pathAndTimeList.size()) {
+					writeFile.write(pathAndTime);
+					continue;
+				}
+				writeFile.write(pathAndTime + "-");
+			}
+			writeFile.flush();
+			writeFile.close();
+		} catch (IOException e) {
+			System.out.println("Fail! PoepleManagement.addInformation");
+		}
 	}
 }

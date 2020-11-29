@@ -3,6 +3,7 @@ package GUI;
 import java.awt.*;
 import java.awt.event.*;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -141,8 +142,9 @@ public class ManagerModeGUI extends JFrame {
 	}
 
 	public void addNewPositives() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd");
 		pre = false;
-		peopleManagement.addInformation(pathAndTimeList);
+		peopleManagement.addInformation(pathAndTimeList, FirstGUI.getDate().format(formatter));
 		pathAndTimeList.clear();
 		peopleManagement.readAll();
 	}

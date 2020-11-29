@@ -90,15 +90,14 @@ public class PeopleManagement extends Manager implements Factory {
 		return personList;
 	}
 
-	public void addInformation(ArrayList<String> pathAndTimeList) {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd");
+	public void addInformation(ArrayList<String> pathAndTimeList, String date) {
 		BufferedWriter writeFile = (BufferedWriter) openFile(fileName, false);
 		int newNumber = number + 1;
 		int count = 0;
 
 		try {
 			writeFile.newLine();
-			writeFile.write(newNumber + " " + FirstGUI.getDate().format(formatter) + " ");
+			writeFile.write(newNumber + " " + date + " ");
 			for (String pathAndTime : pathAndTimeList) {
 				count++;
 				if (count == pathAndTimeList.size()) {
@@ -107,6 +106,7 @@ public class PeopleManagement extends Manager implements Factory {
 				}
 				writeFile.write(pathAndTime + "-");
 			}
+			writeFile.flush();
 			writeFile.close();
 		} catch (IOException e) {
 			System.out.println("Fail! PoepleManagement.addInformation");

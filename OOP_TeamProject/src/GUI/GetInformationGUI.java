@@ -166,6 +166,9 @@ public class GetInformationGUI extends JPanel implements Split {
 				addUserPath();
 			}
 			if (e.getSource() == searchButton) {
+				if (userManager.getID() != null) {
+					userManager.addInformation(date);
+				}
 				removeAll();
 				PathCompareGUI pathCompareGUI = new PathCompareGUI();
 				add(pathCompareGUI);

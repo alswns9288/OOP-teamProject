@@ -20,6 +20,7 @@ public class UserManager {
 	public ArrayList<User> userList = new ArrayList<>(); // 날짜별로 유저에 저장됨
 	public ArrayList<Member> memberList = new ArrayList<>();
 	private String userID;
+	private String memberListFile;
 	private boolean admin;
 
 	private UserManager() {}
@@ -45,8 +46,14 @@ public class UserManager {
 		return false;
 	}
 	
+
+	public void run(String fileName) {
+		memberListFile = fileName;
+	}
+	
 	public boolean signUp(String newID, String newPassword) {
-		BufferedWriter writeFile = (BufferedWriter) openFile("MemberList.txt", false);
+		BufferedWriter writeFile = (BufferedWriter) openFile(memberListFile, false);
+		BufferedWriter newFile = (BufferedWriter) openFile(newID + ".txt", false);
 		
 		for (Member member : memberList) {
 			if (member.name.contentEquals(newID)) {
@@ -55,9 +62,11 @@ public class UserManager {
 		}
 		
 		try {
+			newFile.flush();
 			writeFile.newLine();
 			writeFile.write(newID + " " + newPassword);
 			writeFile.close();
+			readMembers();
 			return true;
 		} catch (IOException e) {
 			System.out.println("Fail! PoepleManagement.addInformation");
@@ -91,12 +100,13 @@ public class UserManager {
 		return null;
 	}
 	
-	public void readMembers(String fileName) {
-		Scanner scanFile = (Scanner) openFile(fileName, true);
+	public void readMembers() {
+		Scanner scanFile = (Scanner) openFile(memberListFile, true);
 		Member member = null;
 		String userID = null;
 		String password = null;
 		
+		memberList.clear();
 		while (scanFile.hasNext()) {
 			userID = scanFile.next();
 			password = scanFile.nextLine();
@@ -202,5 +212,23 @@ public class UserManager {
 		}
 		
 		return riskByPerson;
+	}
+
+	public void addInformation(String date) {
+		Member member = null;
+		for (Member m : memberList) {
+			if (userID.contentEquals(m.name)) {
+				member = m;
+				break;
+			}
+		}
+		for (User user : userList) {
+			if (user.date.contentEquals(date)) {
+				BufferedWriter writeFile = (BufferedWriter) openFile(userID + ".txt", false);
+				member.addInformation(user.getList(), date, writeFile);
+				System.out.println(user.getList().size());
+				break;
+			}
+		}
 	}
 }

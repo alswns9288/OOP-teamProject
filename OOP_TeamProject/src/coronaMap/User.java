@@ -16,6 +16,10 @@ public class User implements Split {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd");
 		this.date = date.format(formatter);
 	}
+	
+	public ArrayList<String> getList() {
+		return pathAndTime;
+	}
 
 	public User(String date) {
 		this.date = date;
