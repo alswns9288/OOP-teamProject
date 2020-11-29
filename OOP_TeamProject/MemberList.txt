@@ -1,4 +1,4 @@
-testUser1 1111
-testUser2 2222
-testUser3 3333
 admin admin
+user1 1111
+user2 2222
+user3 3333

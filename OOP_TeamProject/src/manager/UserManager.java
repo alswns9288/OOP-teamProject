@@ -1,6 +1,8 @@
 package manager;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -43,6 +45,26 @@ public class UserManager {
 		return false;
 	}
 	
+	public boolean signUp(String newID, String newPassword) {
+		BufferedWriter writeFile = (BufferedWriter) openFile("MemberList.txt", false);
+		
+		for (Member member : memberList) {
+			if (member.name.contentEquals(newID)) {
+				return false;
+			}
+		}
+		
+		try {
+			writeFile.newLine();
+			writeFile.write(newID + " " + newPassword);
+			writeFile.close();
+			return true;
+		} catch (IOException e) {
+			System.out.println("Fail! PoepleManagement.addInformation");
+			return false;
+		}
+	}
+
 	public boolean isAdmin() {
 		return admin;
 	}
@@ -70,7 +92,7 @@ public class UserManager {
 	}
 	
 	public void readMembers(String fileName) {
-		Scanner scanFile = openFile(fileName);
+		Scanner scanFile = (Scanner) openFile(fileName, true);
 		Member member = null;
 		String userID = null;
 		String password = null;
@@ -85,16 +107,28 @@ public class UserManager {
 		scanFile.close();
 	}
 
-	private Scanner openFile(String fileName) {
-		Scanner scanFile = null;
+	protected Object openFile(String fileName, boolean type) {
+		if (type) {
+			Scanner scanFile = null;
+
+			try {
+				scanFile = new Scanner(new File(fileName));
+			} catch (IOException e) {
+				System.out.println("Fail! scanFile " + fileName);
+				System.exit(0);
+			}
+			return scanFile;
+		}
+
+		BufferedWriter writeFile = null;
 
 		try {
-			scanFile = new Scanner(new File(fileName));
+			writeFile = new BufferedWriter(new FileWriter(fileName, true));
 		} catch (IOException e) {
-			System.out.println("Fail! scanFile " + fileName);
+			System.out.println("Fail! writeFile " + fileName);
 			System.exit(0);
 		}
-		return scanFile;
+		return writeFile;
 	}
 
 	public void readMemberPath() {

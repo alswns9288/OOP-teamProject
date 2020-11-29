@@ -33,7 +33,7 @@ public class LoginGUI extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				SignUpGUI signup = new SignUpGUI();
-				signup.creatAndShowGUI();
+				signup.createAndShowGUI();
 			}
 		});
 		

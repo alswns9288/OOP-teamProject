@@ -110,7 +110,6 @@ public class PeopleManagement extends Manager implements Factory {
 			writeFile.close();
 		} catch (IOException e) {
 			System.out.println("Fail! PoepleManagement.addInformation");
-			System.exit(0);
 		}
 	}
 }
