@@ -65,10 +65,10 @@ public class ManagerModeGUI extends JFrame {
 		addButton = new JButton("추가");
 		doneButton = new JButton("완료");
 
-		placeField.setBounds(4, 50, 125, 35);
-		timeField.setBounds(133, 50, 85, 35);
-		addButton.setBounds(222, 50, 58, 35);
-		doneButton.setBounds(284, 50, 58, 35);
+		placeField.setBounds(3, 50, 125, 35);
+		timeField.setBounds(130, 50, 85, 35);
+		addButton.setBounds(217, 50, 63, 35);
+		doneButton.setBounds(282, 50, 63, 35);
 
 		bottom.add(placeField);
 		bottom.add(timeField);

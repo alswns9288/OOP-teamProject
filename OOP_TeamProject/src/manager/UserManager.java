@@ -33,7 +33,11 @@ public class UserManager {
 	}
 
 	public boolean login(String ID, String password) {
+		System.out.println("2");
+		System.out.println(memberList.size());
 		for (Member member: memberList) {
+			System.out.println(member.name);
+			System.out.println(ID);
 			if (member.name.contentEquals(ID) && member.password.contentEquals(password)) {
 				userID = ID;
 				if (ID.contentEquals("admin")) {
@@ -49,6 +53,7 @@ public class UserManager {
 
 	public void run(String fileName) {
 		memberListFile = fileName;
+		readMembers();
 	}
 	
 	public boolean signUp(String newID, String newPassword) {
@@ -105,11 +110,11 @@ public class UserManager {
 		Member member = null;
 		String userID = null;
 		String password = null;
-		
+
 		memberList.clear();
 		while (scanFile.hasNext()) {
-			userID = scanFile.next();
-			password = scanFile.nextLine();
+			userID = scanFile.next().trim();
+			password = scanFile.nextLine().trim();
 			
 			member = new Member(userID, password);
 			memberList.add(member);
