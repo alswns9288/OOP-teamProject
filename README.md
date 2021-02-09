@@ -4,4 +4,4 @@
 - 비회원도 사용 가능 (단, 한 번 입력했던 정보는 저장되지 않음)
 - 회원가입 가능
 
-<iframe width="640" height="360" src="./OOP_TeamProject/video.mp4" frameborder="0" gesture="media" allowfullscreen=""></iframe>
+![동영상](./OOP_TeamProject/video.mp4)
